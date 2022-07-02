@@ -81,4 +81,11 @@
       width: 25em;
       margin: 2em;
   }
+
+  .nav{
+      display: flex;
+      justify-content: space-around;
+      border: 2px solid black;
+  }
+
   /*end of home page*/

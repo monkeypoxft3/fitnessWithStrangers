@@ -41,7 +41,7 @@ export default function Login({ setToken, setLoggedIn }) {
   return (
 
     <>
-
+      
       <form onSubmit={(event) => {
         event.preventDefault()
         LoginUser()
@@ -53,6 +53,7 @@ export default function Login({ setToken, setLoggedIn }) {
         <button type="submit">Submit</button>
       </form>
       <Link to="/Register">Create Account</Link>
+      
     </>
 
   )

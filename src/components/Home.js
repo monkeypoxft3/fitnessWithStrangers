@@ -6,10 +6,6 @@ import liftgirl from "../images/liftgirl.png";
 
 
 
-<<<<<<< HEAD
-export default function Home() {
-    
-=======
 export default function ({ token }) {
 
     const [userID, setUserID] = useState("")
@@ -52,7 +48,6 @@ export default function ({ token }) {
         }
         
     }
->>>>>>> 658d1e56a5e9f86eca8743eebafe9cfa1572fb95
     return (
         <div className="home-col">
         {/* needs to be linked to username if not signed in then no name is shown*/}
