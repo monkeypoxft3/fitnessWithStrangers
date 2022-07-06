@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 
 export default function Routines({ token, loggedIn, userId, routines, setRoutines }) {
-    const [routineName, setRoutineName] = useState([]);
-    const [routineGoal, setRoutineGoal] = useState([]);
+    const [routineName, setRoutineName] = useState('');
+    const [routineGoal, setRoutineGoal] = useState('');
 
     useEffect(() => {
         async function getAllPublicRoutines() {
@@ -30,8 +30,8 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                 },
 
                 body: JSON.stringify({
-                    name: RoutineName,
-                    description: RoutineGoal
+                    name: routineName,
+                    description: routineGoal
                 })
             })
             let data = await response.json()
@@ -92,10 +92,9 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                 createRoutine()
                             }}>
 
-                                <input type="text" placeholder="Routine name" required value={routineName} onChange={(event) => { setRoutineName(event.target.value) }}></input>
+                                <input type="text" placeholder="Routine name" onChange={(event) => { setRoutineName(event.target.value) }}></input>
                                 <br></br>
-
-                                <input type="text" placeholder="Routine goal" required value={routineGoal} onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
+                                <input type="text" placeholder="Routine goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
                                 <br></br>
                                 <button type="submit" className="btnAddRoutine">Add Routine</button>
                             </form>
