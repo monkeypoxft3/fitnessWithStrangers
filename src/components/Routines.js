@@ -43,7 +43,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
     }
     async function deleteRoutine(id) {
         try {
-            const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/routines${id}`, {
+            const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/routines/${id}`, {
                 method: "DELETE",
                 headers: {
                     'Content-Type': 'application/json',
@@ -59,43 +59,8 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
 
     return (
         <>
-            <div id='allRoutines'>
-                {routines ? routines.map(routine => {
-                    return (
-                        <div className="routine" key={routine.id}>
-
-                            <h3>{routine.name}</h3>
-                            <p><span className='label'>Goal: </span>{routine.goal}</p>
-                            <p><span className='label'>Creator: </span>{routine.creatorName}</p>
-                            <p><span className='label'>Activities: </span></p>
-
-                            {
-                                routine.activities ? routine.activities.map(activity =>
-                                    <div className="routineActivity" key={activity.id}>
-                                        <h3>{activity.name}</h3>
-                                        <p><span className='label'>Description: </span>{activity.description}</p>
-                                        <p><span className='label'>Duration: </span>{activity.duration}</p>
-                                        <p><span className='label'>Count: </span>{activity.count}</p>
-                                    </div>
-                                ) : null
-                            }
-                            {
-                                routine.creatorId === userId ? <button className="routineBtn">Edit Routine</button> : null
-                            }
-                            {
-                                routine.creatorId === userId ? <button className="routineBtn" onClick={() => { deleteRoutine(routine.id) }}>Delete</button> : null
-                            }
-                        </div>
-                    )
-                }) : null
-                }
-            </div>
-
-
-
-            {/* //ADD ROUTINE */}
-
-            <div>
+         {/* //ADD ROUTINE */}
+         <div>
                 {loggedIn ?
                     <fieldset>
                         <legend>Add Routine</legend>
@@ -117,6 +82,44 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                     </fieldset> : null
                 }
             </div>
+            <div id='allRoutines'>
+                {routines ? routines.map(routine => {
+                    return (
+                        <div className="routine" key={routine.id}>
+                                       
+                            <h3>{routine.name}</h3>
+                            <p><span className='label'>Goal: </span>{routine.goal}</p>
+                            <p><span className='label'>Creator: </span>{routine.creatorName}</p>
+                            <p><span className='label'>Activities: </span></p>
+
+                            {
+                                routine.activities ? routine.activities.map(activity =>
+                                    <div className="routineActivity" key={activity.id}>
+                                        <h3>{activity.name}</h3>
+                                        <p><span className='label'>Description: </span>{activity.description}</p>
+                                        <p><span className='label'>Duration: </span>{activity.duration}</p>
+                                        <p><span className='label'>Count: </span>{activity.count}</p>
+                                    </div>
+                                ) : null
+                            }
+                            {console.log(routine.creatorId,userId)}
+                            {
+                                routine.creatorId === userId ? <button className="routineBtn">Edit Routine</button> : null
+                            }
+                            {
+                                routine.creatorId === userId ? <button className="routineBtn" onClick={() => { deleteRoutine(routine.id) }}>Delete</button> : null
+                            }
+                        </div>
+                    )
+                }) : null
+                }
+            </div>
+
+
+
+
+
+            
         </>
     )
 }
