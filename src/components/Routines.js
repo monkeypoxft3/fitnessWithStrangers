@@ -20,7 +20,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
     }, [token])
 
     //ADD ROUTINE 
-    async function createActivity() {
+    async function createRoutine() {
         try {
             const response = await fetch('http://fitnesstrac-kr.herokuapp.com/api/routines', {
                 method: "POST",
@@ -92,10 +92,10 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                 createRoutine()
                             }}>
 
-                                <input type="text" placeholder="Routine name" required value={routinename} onChange={(event) => { setRoutineName(event.target.value) }}></input>
+                                <input type="text" placeholder="Routine name" required value={name} onChange={(event) => { setRoutineName(event.target.value) }}></input>
                                 <br></br>
 
-                                <input type="text" placeholder="Routine goal" required value={routinegoal} onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
+                                <input type="text" placeholder="Routine goal" required value={goal} onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
                                 <br></br>
                                 <button type="submit" className="btnAddRoutine">Add Routine</button>
                             </form>
