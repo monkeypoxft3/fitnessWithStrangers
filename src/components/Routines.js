@@ -81,7 +81,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
     {/* //ADD ROUTINE */}
 
             <div>
-                !loggedIn ?
+                {!loggedIn ?
                     <fieldset>
                         <legend>Add Routine</legend>
                         <div className="formAddRoutine"><center>
@@ -100,7 +100,8 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                             </form>
                             <Link to="/Register">Create Account</Link>
                         </center></div>
-                    </fieldset>
+                    </fieldset> : null
+                }
                     </div>
         </>
     )}
