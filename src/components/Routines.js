@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect , useState } from "react";
 
 export default function Routines({ token, loggedIn, userId, routines, setRoutines }) {
     const [routineName, setRoutineName] = useState('');
@@ -31,7 +31,8 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
 
                 body: JSON.stringify({
                     name: routineName,
-                    description: routineGoal
+                    goal: routineGoal,
+                    isPublic: true 
                 })
             })
             let data = await response.json()
@@ -81,7 +82,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
     {/* //ADD ROUTINE */}
 
             <div>
-                {!loggedIn ?
+                {loggedIn ?
                     <fieldset>
                         <legend>Add Routine</legend>
                         <div className="formAddRoutine"><center>
@@ -98,7 +99,6 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                 <br></br>
                                 <button type="submit" className="btnAddRoutine">Add Routine</button>
                             </form>
-                            <Link to="/Register">Create Account</Link>
                         </center></div>
                     </fieldset> : null
                 }
