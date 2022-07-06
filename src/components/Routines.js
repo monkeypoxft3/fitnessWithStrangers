@@ -92,10 +92,10 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                 createRoutine()
                             }}>
 
-                                <input type="text" placeholder="Routine name" required value={name} onChange={(event) => { setRoutineName(event.target.value) }}></input>
+                                <input type="text" placeholder="Routine name" required value={routineName} onChange={(event) => { setRoutineName(event.target.value) }}></input>
                                 <br></br>
 
-                                <input type="text" placeholder="Routine goal" required value={goal} onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
+                                <input type="text" placeholder="Routine goal" required value={routineGoal} onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
                                 <br></br>
                                 <button type="submit" className="btnAddRoutine">Add Routine</button>
                             </form>
