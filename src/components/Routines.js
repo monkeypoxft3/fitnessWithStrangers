@@ -1,4 +1,4 @@
-import React, { useEffect , useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Routines({ token, loggedIn, userId, routines, setRoutines }) {
     const [routineName, setRoutineName] = useState('');
@@ -32,7 +32,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                 body: JSON.stringify({
                     name: routineName,
                     goal: routineGoal,
-                    isPublic: true 
+                    isPublic: true
                 })
             })
             let data = await response.json()
@@ -41,7 +41,21 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
             console.error("Not created")
         }
     }
+    async function deleteRoutine(id) {
+        try {
+            const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/routines${id}`, {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            let data = await response.json()
 
+        } catch (err) {
+            console.error("Cannot delete what you dont create")
+        }
+    }
 
     return (
         <>
@@ -65,12 +79,12 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                     </div>
                                 ) : null
                             }
-                            {/* {
-                                            routine.creatorId===userId ? <Link to="/UpdateRoutine" className="routineBtn">Edit Post </Link> : null
-                                        }
-                                        {
-                                            routine.creatorId===userId ? <Link to="/Routine" className="routineBtn" onClick={() => {deleteMyRoutine(token, routine.id)}}>Delete</Link> : null
-                                        } */}
+                            {
+                                routine.creatorId === userId ? <button className="routineBtn">Edit Routine</button> : null
+                            }
+                            {
+                                routine.creatorId === userId ? <button className="routineBtn" onClick={() => { deleteRoutine(routine.id) }}>Delete</button> : null
+                            }
                         </div>
                     )
                 }) : null
@@ -79,7 +93,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
 
 
 
-    {/* //ADD ROUTINE */}
+            {/* //ADD ROUTINE */}
 
             <div>
                 {loggedIn ?
@@ -102,6 +116,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                         </center></div>
                     </fieldset> : null
                 }
-                    </div>
+            </div>
         </>
-    )}
+    )
+}
