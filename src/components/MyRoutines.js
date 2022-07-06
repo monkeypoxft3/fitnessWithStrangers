@@ -4,32 +4,32 @@ import { BrowserRouter, useNavigate, Routes, Route, Link } from "react-router-do
 
 export default function MyRouintes({token, setPosts}){
 
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
-    async function createMyRoutines(){
-        try{
-            const response = await fetch('http://fitnesstrac-kr.herokuapp.com/api/routines/{$id}', {
-            method: "POST",
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-              post: {
-                title: title,
-                description: description,
-                price: Price,
-                willDeliver: willDeliver
-              }
-            })
-          })
-          let data = await response.json()
-                setPosts(data.data.post)
+    // async function createMyRoutines(){
+    //     try{
+    //         const response = await fetch('http://fitnesstrac-kr.herokuapp.com/api/routines/{$id}', {
+    //         method: "POST",
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //           'Authorization': `Bearer ${token}`
+    //         },
+    //         body: JSON.stringify({
+    //           post: {
+    //             title: title,
+    //             description: description,
+    //             price: Price,
+    //             willDeliver: willDeliver
+    //           }
+    //         })
+    //       })
+    //       let data = await response.json()
+    //             setPosts(data.data.post)
 
-            }catch(err){
-                console.log(err)
-            }
-        }
+    //         }catch(err){
+    //             console.log(err)
+    //         }
+    //     }
         return (
             <>
             <div id="postForm">

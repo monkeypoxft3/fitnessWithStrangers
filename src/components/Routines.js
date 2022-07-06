@@ -1,17 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function Routines({ token, loggedIn, userId, routines, setRoutines }) {
-
+export default function Routines({ token, loggedIn, userId, routines, setRoutines, activities }) {
+        const [ activityId, setActivityId ] = useState(0);
         // useEffect(() => {
         //     sortPostList(searchTerm, postList);
         // },[searchTerm])
     
         useEffect(() => {
+            console.log(userId);
             async function getAllPublicRoutines() {
                 try {
                     const response = await fetch('http://fitnesstrac-kr.herokuapp.com/api/routines');
                     let result = await response.json();
-                    console.log(result);
+   
                     setRoutines(result);
                     return;
                 } catch(error) {
@@ -42,12 +43,28 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                             </div>
                                           ) : null
                                         }
-                                        {/* {
+                                        
+                                        {
+                                            routine.creatorId===userId ? 
+                                            <form>
+                                                <select 
+                                                    className="addActivity"
+                                                    value={activityId}
+                                                    onChange={(event) => setActivityId(event.target.value)}>
+                                                    {activities.map(selectedOption => {return <option key={selectedOption.id} value={selectedOption.id}>{selectedOption.name}</option>})}
+                                                    <button className="addActivityBtn" onClick={addActivityToRoutine}>Add</button>
+                                                </select>
+                                                <input>Count</input>
+                                                <input>Duration</input>
+                                            </form> : null
+                                        }
+                                        {/*
                                             routine.creatorId===userId ? <Link to="/UpdateRoutine" className="routineBtn">Edit Post </Link> : null
                                         }
                                         {
                                             routine.creatorId===userId ? <Link to="/Routine" className="routineBtn" onClick={() => {deleteMyRoutine(token, routine.id)}}>Delete</Link> : null
-                                        } */}
+                                        }
+                                        */}
                                     </div>
                                 )
                             }) : null

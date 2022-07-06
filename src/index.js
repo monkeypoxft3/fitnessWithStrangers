@@ -21,6 +21,7 @@ function App(){
     const [token, setToken] = useState("");
     const [userId, setUserId] = useState(0);
     const [routines, setRoutines] = useState([]);
+    const [activities, setActivities] = useState([]);
     
     const navigate = useNavigate();
     
@@ -49,12 +50,12 @@ function App(){
         <Routes>
             
             <Route path = "/" element={<Home />}></Route>
-            <Route path = "Routines" element={<Routines loggedIn={loggedIn} token={token} userId={userId} routines={routines} setRoutines={setRoutines}/>}></Route>
+            <Route path = "Routines" element={<Routines loggedIn={loggedIn} token={token} userId={userId} routines={routines} setRoutines={setRoutines} activities={activities}/>}></Route>
             <Route path = "Login" element={<Login setToken={setToken} setLoggedIn={setLoggedIn} setUserId={setUserId}/>}></Route>
             <Route path = "Home" element={<Home token={token} />}></Route>
             <Route path = "Register" element={<Register setToken={setToken} setLoggedIn={setLoggedIn} setUserId={setUserId}/>}></Route>
-            <Route path = "MyRoutines" element={<MyRoutines loggedIn={loggedIn} token={token} userId={userId} />}></Route>
-            <Route path = "Activities" element={<Activities loggedIn = {loggedIn} token={token}/>}></Route>
+            <Route path = "MyRoutines" element={<MyRoutines loggedIn={loggedIn} token={token} userId={userId} activities={activities}/>}></Route>
+            <Route path = "Activities" element={<Activities loggedIn = {loggedIn} token={token} activities={activities} setActivities={setActivities}/>}></Route>
             <Route path = "*" element={<Error/>}></Route>
 
         </Routes>

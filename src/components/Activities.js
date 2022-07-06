@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import reactdomclient  from "react-dom/client";
 import { BrowserRouter, useNavigate, Routes, Route, Link } from "react-router-dom";
 
-export default function Activities({loggedIn, token}){
-    const [activities, setActivities] = useState([]);
+export default function Activities({loggedIn, token, activities, setActivities}){
+
 
     useEffect(()=>{
 
