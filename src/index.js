@@ -28,9 +28,13 @@ function App(){
 
     useEffect(()=>{
         let savedToken = localStorage.getItem("token");
+        let savedUserId = localStorage.getItem("userId");
         if(savedToken){
             setLoggedIn(true);
             setToken(savedToken);
+        }
+        if(savedUserId){
+            setUserId(Number(savedUserId));
         }
     },[])
 
@@ -62,7 +66,7 @@ function App(){
         
         <br></br>
         <br></br>
-        <Footer/>
+        <Footer />
         </>
     )
 }

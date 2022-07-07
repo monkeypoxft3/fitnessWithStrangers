@@ -9,10 +9,11 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
 
     useEffect(() => {
         async function getAllPublicRoutines() {
+
             try {
                 const response = await fetch('http://fitnesstrac-kr.herokuapp.com/api/routines');
                 let result = await response.json();
-                console.log(result);
+
                 setRoutines(result);
                 return;
             } catch (error) {
@@ -116,7 +117,13 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                         <h3>{routine.name}</h3>
                                         <p><span className='label'>Goal: </span>{routine.goal}</p>
                                         <p><span className='label'>Creator: </span>{routine.creatorName}</p>
-                                        <p><span className='label'>Activities: </span></p>
+                                        {
+                                        routine.creatorId === userId ? <button className="routineBtn">Edit Routine</button> : null
+                                        }
+                                        {
+                                        routine.creatorId === userId ? <button className="routineBtn" onClick={() => { deleteRoutine(routine.id) }}>Delete</button> : null
+                                        }
+                                        <p><span className='label'>--Activities--</span></p>
                                         
                                         {
                                          routine.activities ? routine.activities.map(activity => 
@@ -128,33 +135,28 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                             </div>
                                           ) : null
                                         }
-                                        
+
                                         {
                                             routine.creatorId===userId ? 
-                                                 <form onSubmit={(event) => {
-                                                event.preventDefault()
-                                                addActivityToRoutine(routine.id)
-                                                }}>
-                                                <select 
-                                                    className="addActivity"
-                                                    value={activityId}
-                                                    onChange={(event) => setActivityId(event.target.value)}>
-                                                    {activities.map(selectedOption => {return <option key={selectedOption.id} value={selectedOption.id}>{selectedOption.name}</option>})}
-                                                    
-                                                </select>
-                                                <input type="text" placeholder="count" onChange={(event) => { setCount(event.target.value) }}></input>
-                                                <br></br>
-                                                <input type="text" placeholder="duration" onChange={(event) => { setDuration(event.target.value) }}></input>
-                                                <button type="submit" className="addActivityBtn">Add Activity</button>
-                                            </form> : null
+                                                <form onSubmit={(event) => {
+                                                        event.preventDefault()
+                                                        addActivityToRoutine(routine.id)
+                                                    }}>
+                                                    <select 
+                                                        className="addActivity"
+                                                        value={activityId}
+                                                        onChange={(event) => setActivityId(event.target.value)}>
+                                                        {activities.map(selectedOption => {return <option key={selectedOption.id} value={selectedOption.id}>{selectedOption.name}</option>})}
+                                                        
+                                                    </select>
+                                                    <input type="text" placeholder="count" onChange={(event) => { setCount(event.target.value) }}></input>
+                                                    <br></br>
+                                                    <input type="text" placeholder="duration" onChange={(event) => { setDuration(event.target.value) }}></input>
+                                                    <button type="submit" className="addActivityBtn">Add Activity</button>
+                                                </form> : null
                                         }
-                            {console.log(routine.creatorId,userId)}
-                            {
-                                routine.creatorId === userId ? <button className="routineBtn">Edit Routine</button> : null
-                            }
-                            {
-                                routine.creatorId === userId ? <button className="routineBtn" onClick={() => { deleteRoutine(routine.id) }}>Delete</button> : null
-                            }
+                            
+                            
                         </div>
                     )
                 }) : null

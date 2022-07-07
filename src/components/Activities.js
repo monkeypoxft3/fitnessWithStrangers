@@ -10,13 +10,8 @@ export default function Activities({loggedIn, token, activities, setActivities})
 
         async function getActivities() {
             try {
-                const response = await fetch('http://fitnesstrac-kr.herokuapp.com/api/activities', {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                })
+                const response = await fetch('http://fitnesstrac-kr.herokuapp.com/api/activities')
                 let data = await response.json()
-
 
                 setActivities(data)
             }
