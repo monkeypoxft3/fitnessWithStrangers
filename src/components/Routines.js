@@ -4,8 +4,8 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
     const [ activityId, setActivityId ] = useState(0);
     const [routineName, setRoutineName] = useState('');
     const [routineGoal, setRoutineGoal] = useState('');
-    const [count, setCount] = useState('');
-    const [duration, setDuration] = useState('');
+    const [count, setCount] = useState(0);
+    const [duration, setDuration] = useState(0);
 
     useEffect(() => {
         async function getAllPublicRoutines() {
