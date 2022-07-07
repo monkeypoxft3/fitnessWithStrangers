@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-export default function Routines({ token, loggedIn, userId, routines, setRoutines }) {
-    const [ activityId, setActivityId ] = useState(0);
+export default function Routines({ token, loggedIn, userId, routines, setRoutines, activities }) {
+    const [activityId, setActivityId] = useState(0);
     const [routineName, setRoutineName] = useState('');
     const [routineGoal, setRoutineGoal] = useState('');
     const [count, setCount] = useState(0);
@@ -20,7 +20,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
             }
         }
         getAllPublicRoutines();
-    }, [token])
+    }, [routines.length])
 
     //ADD ROUTINE 
     async function createRoutine() {
@@ -44,6 +44,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
             console.error("Not created")
         }
     }
+
     async function deleteRoutine(id) {
         try {
             const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/routines/${id}`, {
@@ -59,7 +60,28 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
             console.error("Cannot delete what you dont create")
         }
     }
+    //ADD ACTIVITY TO ROUTINE
+    async function addActivityToRoutine(routineId) {
+        try {
+            const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/routines/${routineId}/activities`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
 
+                body: JSON.stringify({
+                    activityId: activityId,
+                    count: count,
+                    duration: duration
+                })
+            })
+            let data = await response.json()
+
+        } catch (err) {
+            console.error("Not created")
+        }
+    }
     return (
         <>
          {/* //ADD ROUTINE */}
@@ -110,12 +132,13 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                         {
                                             routine.creatorId===userId ? 
                                             <form>
+
                                                 <select 
                                                     className="addActivity"
                                                     value={activityId}
                                                     onChange={(event) => setActivityId(event.target.value)}>
                                                     {activities.map(selectedOption => {return <option key={selectedOption.id} value={selectedOption.id}>{selectedOption.name}</option>})}
-                                                    <button className="addActivityBtn" onClick={addActivityToRoutine}>Add</button>
+                                                    <button className="addActivityBtn" onClick={addActivityToRoutine(routine.id)}>Add</button>
                                                 </select>
                                                 <input type="text" placeholder="Count" onChange={(event) => { setCount(event.target.value) }}></input>
                                                 <br></br>
