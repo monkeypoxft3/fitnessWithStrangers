@@ -4,6 +4,8 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
     const [ activityId, setActivityId ] = useState(0);
     const [routineName, setRoutineName] = useState('');
     const [routineGoal, setRoutineGoal] = useState('');
+    const [count, setCount] = useState('');
+    const [duration, setDuration] = useState('');
 
     useEffect(() => {
         async function getAllPublicRoutines() {
@@ -115,8 +117,9 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                                     {activities.map(selectedOption => {return <option key={selectedOption.id} value={selectedOption.id}>{selectedOption.name}</option>})}
                                                     <button className="addActivityBtn" onClick={addActivityToRoutine}>Add</button>
                                                 </select>
-                                                <input>Count</input>
-                                                <input>Duration</input>
+                                                <input type="text" placeholder="Count" onChange={(event) => { setCount(event.target.value) }}></input>
+                                                <br></br>
+                                                <input type="text" placeholder="Duration" onChange={(event) => { setDuration(event.target.value) }}></input>
                                             </form> : null
                                         }
                             {console.log(routine.creatorId,userId)}
