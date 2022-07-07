@@ -29,6 +29,8 @@ export default function Register({ setToken, setLoggedIn, setUserId }) {
         setLoggedIn(true)
         setUserId(result.user.id)
         localStorage.setItem("token", result.token)
+        alert("Sucessfully Registers with Monkey Pox...Redirecting to your Home Page")
+        navigate("/")
       }
       else {
         alert("Username Already Exists!")

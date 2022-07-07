@@ -1,28 +1,89 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-export default function Routines({ token, loggedIn, userId, routines, setRoutines, activities }) {
-        const [ activityId, setActivityId ] = useState(0);
-        // useEffect(() => {
-        //     sortPostList(searchTerm, postList);
-        // },[searchTerm])
-    
-        useEffect(() => {
-            console.log(userId);
-            async function getAllPublicRoutines() {
-                try {
-                    const response = await fetch('http://fitnesstrac-kr.herokuapp.com/api/routines');
-                    let result = await response.json();
-   
-                    setRoutines(result);
-                    return;
-                } catch(error) {
-                    console.error("Error fetching all public routines!"+error);
-                }
+export default function Routines({ token, loggedIn, userId, routines, setRoutines }) {
+    const [ activityId, setActivityId ] = useState(0);
+    const [routineName, setRoutineName] = useState('');
+    const [routineGoal, setRoutineGoal] = useState('');
+
+    useEffect(() => {
+        async function getAllPublicRoutines() {
+            try {
+                const response = await fetch('http://fitnesstrac-kr.herokuapp.com/api/routines');
+                let result = await response.json();
+                console.log(result);
+                setRoutines(result);
+                return;
+            } catch (error) {
+                console.error("Error fetching all public routines!" + error);
             }
-            getAllPublicRoutines();
-        },[token])
+        }
+        getAllPublicRoutines();
+    }, [token])
 
-        return (
+    //ADD ROUTINE 
+    async function createRoutine() {
+        try {
+            const response = await fetch('http://fitnesstrac-kr.herokuapp.com/api/routines', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+
+                body: JSON.stringify({
+                    name: routineName,
+                    goal: routineGoal,
+                    isPublic: true
+                })
+            })
+            let data = await response.json()
+
+        } catch (err) {
+            console.error("Not created")
+        }
+    }
+    async function deleteRoutine(id) {
+        try {
+            const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/routines/${id}`, {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            let data = await response.json()
+
+        } catch (err) {
+            console.error("Cannot delete what you dont create")
+        }
+    }
+
+    return (
+        <>
+         {/* //ADD ROUTINE */}
+         <div>
+                {loggedIn ?
+                    <fieldset>
+                        <legend>Add Routine</legend>
+                        <div className="formAddRoutine"><center>
+                            <div>Add A Monkey Pox Routine</div>
+                            <br></br>
+                            <form onSubmit={(event) => {
+                                event.preventDefault()
+                                createRoutine()
+                            }}>
+
+                                <input type="text" placeholder="Routine name" onChange={(event) => { setRoutineName(event.target.value) }}></input>
+                                <br></br>
+                                <input type="text" placeholder="Routine goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
+                                <br></br>
+                                <button type="submit" className="btnAddRoutine">Add Routine</button>
+                            </form>
+                        </center></div>
+                    </fieldset> : null
+                }
+            </div>
+            
             <div id='allRoutines'>
                 {   routines ? routines.map(routine => {
                                 return (
@@ -58,20 +119,24 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                                 <input>Duration</input>
                                             </form> : null
                                         }
-                                        {/*
-                                            routine.creatorId===userId ? <Link to="/UpdateRoutine" className="routineBtn">Edit Post </Link> : null
-                                        }
-                                        {
-                                            routine.creatorId===userId ? <Link to="/Routine" className="routineBtn" onClick={() => {deleteMyRoutine(token, routine.id)}}>Delete</Link> : null
-                                        }
-                                        */}
-                                    </div>
-                                )
-                            }) : null
+                            {console.log(routine.creatorId,userId)}
+                            {
+                                routine.creatorId === userId ? <button className="routineBtn">Edit Routine</button> : null
+                            }
+                            {
+                                routine.creatorId === userId ? <button className="routineBtn" onClick={() => { deleteRoutine(routine.id) }}>Delete</button> : null
+                            }
+                        </div>
+                    )
+                }) : null
                 }
             </div>
-        )
-    
-}
-    
 
+
+
+
+
+            
+        </>
+    )
+}

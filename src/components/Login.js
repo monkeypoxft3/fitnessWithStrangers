@@ -28,12 +28,17 @@ export default function Login({ setToken, setLoggedIn, setUserId }) {
         })
       })
       let result = await response.json()
-
-      setToken(result.token)
-      setLoggedIn(true)
-      setUserId(result.user.id)
-      localStorage.setItem("token", result.token)
-      navigate("/Home")
+      //console.log(result)
+      console.log(result)
+      if (result.user) {
+        setToken(result.token)
+        setLoggedIn(true)
+        localStorage.setItem("token", result.token)
+        setUserId(result.user.id)
+        navigate("/Home")
+      } else {
+        alert("Login Failed...Remember your credentials!")
+      }
     } catch (err) {
       console.log("Ahh couldn't log in!! " + err)
     }
@@ -67,3 +72,4 @@ export default function Login({ setToken, setLoggedIn, setUserId }) {
 
   )
 }
+
