@@ -109,17 +109,21 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                         
                                         {
                                             routine.creatorId===userId ? 
-                                            <form>
+                                                 <form onSubmit={(event) => {
+                                                event.preventDefault()
+                                                addActivityToRoutine(routine.id)
+                                                }}>
                                                 <select 
                                                     className="addActivity"
                                                     value={activityId}
                                                     onChange={(event) => setActivityId(event.target.value)}>
                                                     {activities.map(selectedOption => {return <option key={selectedOption.id} value={selectedOption.id}>{selectedOption.name}</option>})}
-                                                    <button className="addActivityBtn" onClick={addActivityToRoutine}>Add</button>
+                                                    
                                                 </select>
-                                                <input type="text" placeholder="Count" onChange={(event) => { setCount(event.target.value) }}></input>
+                                                <input type="text" placeholder="count" onChange={(event) => { setCount(event.target.value) }}></input>
                                                 <br></br>
-                                                <input type="text" placeholder="Duration" onChange={(event) => { setDuration(event.target.value) }}></input>
+                                                <input type="text" placeholder="duration" onChange={(event) => { setDuration(event.target.value) }}></input>
+                                                <button type="submit" className="addActivityBtn">Add Activity</button>
                                             </form> : null
                                         }
                             {console.log(routine.creatorId,userId)}
