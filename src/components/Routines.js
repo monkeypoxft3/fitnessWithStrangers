@@ -26,7 +26,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
         getAllPublicRoutinesAndActivites();
 
     }, [])
-    
+
     function buttonToggle(){
       var t = document.getElementByClassName("editActivityBtn");
      t.classList.toggle("hidden");
@@ -153,7 +153,6 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                                     <button type="submit" className="submitActivityBtn">Submit Edit</button>
                                             </form>:null
                                         }
-                                        
                                             </div>
                                           ) : null
                                         }

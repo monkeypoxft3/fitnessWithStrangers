@@ -115,7 +115,7 @@ export async function addActivityToRoutine(token, routineId, count, duration) {
     }
 }
 
-export async function editRoutine(token, routineId, routineName, routineGoal) {
+export async function editRoutine(token, routineId, routineName, routineGoal, isPublic) {
     try {
         const response = await fetch(`${BASE_URL}routines/${routineId}`, {
             method: "PATCH",
