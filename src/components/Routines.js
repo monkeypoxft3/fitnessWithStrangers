@@ -26,7 +26,14 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
         getAllPublicRoutinesAndActivites();
 
     }, [])
- 
+    
+    function buttonToggle(){
+      var t = document.getElementByClassName("editActivityBtn");
+     t.classList.toggle("hidden");
+     var f = document.getElementById("editActivity");
+     f.classList.toggle("hidden");
+    }
+    
     return (
         <>
          {/* //ADD ROUTINE */}
@@ -128,10 +135,10 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                               <p><span className='label'>Description: </span>{activity.description}</p>
                                               <p><span className='label'>Duration: </span>{activity.duration}</p>
                                               <p><span className='label'>Count: </span>{activity.count}</p>
-                                              {routine.creatorId===userId? <button type="submit" className="editActivityBtn">Edit Activity</button>: null}
- 
+                                              {routine.creatorId===userId? <button type="submit" className="editActivityBtn" onClick = { () => {buttontoggle()}}>Edit Activity</button>: null}
+                                                
                                                {routine.creatorId===userId ? 
-                                                <form onSubmit={ async (event) => {
+                                                <form id = "editActivity" onSubmit={ async (event) => {
                                                     event.preventDefault();
                                                     const result = await editActivity(token, activity.routineActivityId, count, duration);
                                                     if(!result.error){
