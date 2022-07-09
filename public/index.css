@@ -235,10 +235,14 @@ iframe
 }
 
 .activity-row {
-    width: 50%; 
-    display: grid;   
+    width: 49%; 
+    /* display: inline-flexbox; */
+    display: inline-block;
+    /* justify-content: space-evenly; */
+    justify-content: center;
+    
 
-    /* flex-grow: 1; */
+    flex-grow: 1;
     /* flex-wrap: wrap; */
     /* align-items: center; */
     /* width: 40%;*/
