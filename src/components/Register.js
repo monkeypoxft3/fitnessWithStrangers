@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../api";
 
 
-export default function Register({ setToken, setLoggedIn, setUserId }) {
-  const [username, setUsername] = useState("")
+export default function Register({ username, setUsername, setToken, setLoggedIn, setUserId }) {
+  
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
 

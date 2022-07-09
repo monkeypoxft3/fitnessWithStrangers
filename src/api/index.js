@@ -114,7 +114,17 @@ export async function addActivityToRoutine(token, routineId, count, duration) {
         console.error("Error adding activity to routine;" + err);
     }
 }
+// MyRoutines ---------------------------------------------------------------- (1)
+export async function fetchUserRoutines(username) {
 
+    try {
+        const response = await fetch(`${BASE_URL}users/${username}/routines`);
+        let result = await response.json();
+        return result;
+    } catch (error) {
+        console.error("Error fetching your routines!" + error);
+    }
+}
 // Activities ---------------------------------------------------------------- (2)
 export async function fetchAllActivities() {
     try {
