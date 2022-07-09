@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchAllPublicRoutines, createRoutine, deleteRoutine, addActivityToRoutine, fetchAllActivities, editRoutine } from "../api";
+import { fetchAllPublicRoutines, createRoutine, deleteRoutine, addActivityToRoutine, fetchAllActivities, editRoutine, editActivity } from "../api";
 
 export default function Routines({ token, loggedIn, userId, routines, setRoutines, activities, setActivities }) {
     const [activityId, setActivityId] = useState(0);
@@ -73,9 +73,16 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                         <p><span className='label'>Creator: </span>{routine.creatorName}</p>
                                         
                                         {routine.creatorId===userId ? 
-                                            <form onSubmit={(event) => {
+                                            <form onSubmit={ async (event) => {
                                                 event.preventDefault();
-                                                //editRoutine(token, routineId, routineName, routineGoal);
+                                        
+                                                const result = await editRoutine(token, routineId, routineName, routineGoal);
+                                                if(!result.error){
+                                                    getAllPublicRoutinesAndActivites()
+
+                                                }else{
+                                                    alert(result.error);
+                                                }
                                             }}>
                                                     <input type="text" placeholder="name" value={routineName} onChange={(event) => { setRoutineName(event.target.value) }}></input>
                                                     <br></br>
@@ -90,9 +97,14 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                         }
                                         {
                                             routine.creatorId===userId ? 
-                                                <form onSubmit={(event) => {
+                                                <form onSubmit={async (event) => {
                                                         event.preventDefault();
-                                                        addActivityToRoutine(token, routine.id, count, duration);
+                                                        const result = await addActivityToRoutine(token, routine.id, count, duration);
+                                                        if(!result.error){
+                                                            getAllPublicRoutinesAndActivites()
+                                                        }else{
+                                                            alert(result.error);
+                                                        }
                                                     }}>
                                                     <select 
                                                         className="addActivity"
@@ -116,11 +128,17 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                               <p><span className='label'>Description: </span>{activity.description}</p>
                                               <p><span className='label'>Duration: </span>{activity.duration}</p>
                                               <p><span className='label'>Count: </span>{activity.count}</p>
+                                              {routine.creatorId===userId? <button type="submit" className="editActivityBtn">Edit Activity</button>: null}
  
                                                {routine.creatorId===userId ? 
-                                                <form onSubmit={(event) => {
+                                                <form onSubmit={ async (event) => {
                                                     event.preventDefault();
-                                                    //editActivity(token, routineId, count, duration);
+                                                    const result = await editActivity(token, activity.routineActivityId, count, duration);
+                                                    if(!result.error){
+                                                        getAllPublicRoutinesAndActivites()
+                                                    }else{
+                                                        alert(result.error);
+                                                    }
                                                 }}>
                                                     <input type="text" placeholder="count" value={count} onChange={(event) => { setCount(event.target.value) }}></input>
                                                     <br></br>
@@ -128,7 +146,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                                     <button type="submit" className="submitActivityBtn">Submit Edit</button>
                                             </form>:null
                                         }
-                                        <button type="submit" className="editActivityBtn">Edit Activity</button>
+                                        
                                             </div>
                                           ) : null
                                         }

@@ -131,6 +131,7 @@ export async function editRoutine(token, routineId, routineName, routineGoal) {
             })
         })
         let data = await response.json();
+        console.log(data)
         return data;
     } catch (err) {
         console.error("Error editing routine;" + err);
@@ -153,6 +154,7 @@ export async function editActivity(token, routineActivityId, count, duration) {
             })
         })
         let data = await response.json();
+        console.log(data)
         return data;
     } catch (err) {
         console.error("Error editing activity;" + err);
