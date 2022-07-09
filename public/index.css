@@ -301,3 +301,7 @@ iframe
 
 
   
+/*TOGGLE EDIT ACTIVITY*/
+.hidden{
+    display:none;
+}
