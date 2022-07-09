@@ -13,7 +13,6 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
 
     async function getAllUserRoutinesAndActivites(username) {
         try {
-            console.log(username)
             const routinesResult = await fetchUserRoutines(token, username);
             const activitiesResult = await fetchAllActivities();
             routinesResult.reverse();

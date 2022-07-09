@@ -16,7 +16,6 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
             routinesResult.reverse();
             setRoutines(routinesResult);
             setActivities(activitiesResult);
-            console.log(routines,userId);
         } catch (err) {
             console.error("Error fetching routines!");
         }
@@ -28,11 +27,11 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
 
     }, [])
 
-    function buttonToggle(){
-      var t = document.getElementByClassName("editActivityBtn");
-     t.classList.toggle("hidden");
-     var f = document.getElementById("editActivity");
-     f.classList.toggle("hidden");
+    function buttonToggle() {
+        var t = document.getElementByClassName("editActivityBtn");
+        t.classList.toggle("hidden");
+        var f = document.getElementById("editActivity");
+        f.classList.toggle("hidden");
     }
     
     return (
@@ -44,8 +43,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                 {   loggedIn ?
                 
                     <fieldset className='routine-box'>
-                        
-                        
+            
                         <div className="formAddRoutine"><center>
                             <br></br>
                             <div>Add A Monkey Pox Routine</div>
@@ -80,19 +78,16 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
             <div id='allRoutines'>
                 {   routines ? routines.map(routine => {
                                 return (
-                                    <div>
-                                    
                                     <div className="routine" key={routine.id}>
                                         
                                         <h3>{routine.name}</h3>
                                         <p><span className='label'>Goal: </span>{routine.goal}</p>
                                         <p><span className='label'>Creator: </span>{routine.creatorName}</p>
                                         
-                                        {routine.creatorId===userId ? 
+                                        { routine.creatorId===userId ? 
                                             <form onSubmit={ async (event) => {
                                                 event.preventDefault();
-                                        
-                                                const result = await editRoutine(token, routineId, routineName, routineGoal);
+                                                const result = await editRoutine(token, routine.id, routineName, routineGoal);
                                                 if(!result.error){
                                                     getAllPublicRoutinesAndActivites()
 
@@ -148,7 +143,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                                 <p><span className='label'>Count: </span>{activity.count}</p>
                                                 <p><span className='label'>Duration: </span>{activity.duration}</p>
                                                 </fieldset>
-                                                { routine.creatorId===userId ? <button className="editActivityBtn" onClick = { () => {buttontoggle()}}>Edit Activity</button>: null}
+                                                { routine.creatorId===userId ? <button className="editActivityBtn" onClick = { () => {buttonToggle()}}>Edit Activity</button>: null}
                                                 
                                                 { routine.creatorId===userId ? 
                                                     <form id = "editActivity" onSubmit={ async (event) => {
@@ -172,7 +167,6 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                          <br></br>
                                     </div>
                                     
-                        </div>
                     )
                 }) : null
                 }   
