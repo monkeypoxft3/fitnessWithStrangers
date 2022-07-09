@@ -30,12 +30,17 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
  
     return (
         <>
+        
          {/* //ADD ROUTINE */}
          <div>
+             <br></br>
                 {   loggedIn ?
-                    <fieldset>
-                        <legend>Add Routine</legend>
+                
+                    <fieldset className='routine-box'>
+                        
+                        
                         <div className="formAddRoutine"><center>
+                            <br></br>
                             <div>Add A Monkey Pox Routine</div>
                             <br></br>
                             <form onSubmit={async (event) => {
@@ -49,9 +54,9 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                 }
                             }}>
 
-                                <input type="text" placeholder="Routine name" onChange={(event) => { setRoutineName(event.target.value) }}></input>
+                                <input type="text" placeholder="Routine Name" onChange={(event) => { setRoutineName(event.target.value) }}></input>
                                 <br></br>
-                                <input type="text" placeholder="Routine goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
+                                <input type="text" placeholder="Routine Goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
                                 <br></br>
                                 <label>Public Routine? </label>
                                 <input type="checkbox" value={isPublic} checked={isPublic} onChange={()=>{ setIsPublic(!isPublic); console.log(!isPublic) }}></input>
@@ -63,10 +68,13 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                     </fieldset> : null
                 }
             </div>
+            <h1> Routines </h1>
             
             <div id='allRoutines'>
                 {   routines ? routines.map(routine => {
                                 return (
+                                    <div>
+                                    
                                     <div className="routine" key={routine.id}>
                                         
                                         <h3>{routine.name}</h3>
@@ -109,21 +117,24 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                         
                                         {
                                          routine.activities ? routine.activities.map(activity => 
+                                            
                                             <div className="routineActivity" key={activity.id}>
-                                              <h3>{activity.name}</h3>
-                                              <p><span className='label'>Description: </span>{activity.description}</p>
-                                              <p><span className='label'>Count: </span>{activity.count}</p>
-                                              <p><span className='label'>Duration: </span>{activity.duration}</p>
-                                              
+                                                <fieldset className='routines'>
+                                                <legend>{activity.name}</legend>
+                                                <p><span className='label'>Description: </span>{activity.description}</p>
+                                                <p><span className='label'>Count: </span>{activity.count}</p>
+                                                <p><span className='label'>Duration: </span>{activity.duration}</p>
+                                                </fieldset>
                                             </div>
                                           ) : null
-                                        }
-                          
-                            
+                                         }
+                                         <br></br>
+                                    </div>
+                                    
                         </div>
                     )
                 }) : null
-                }
+                }   
             </div>
         </>
     )

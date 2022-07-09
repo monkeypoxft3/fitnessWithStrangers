@@ -35,13 +35,16 @@ export default function Activities({loggedIn, token, activities, setActivities})
                         alert(result.error);
                     }
                 }}>
-                    <fieldset className='create-activity'>
-                        <legend><b><i>Create your own activity!</i></b></legend><br></br>
-                        <input type="text" placeholder="Activity Name" required onChange={(event) => { setActivityName(event.target.value) }} ></input>
-                        <input type="text" placeholder="Description" onChange={(event) => { setActivityDescription(event.target.value) }} ></input>
-                        <button className='create-button' type="submit"> CREATE</button>
+                    <fieldset className='create-activity'><center>
+                        <div><center>Create your own Monkey Pox activity!</center></div>
                         <br></br>
-                    </fieldset>
+                        <input type="text" placeholder="Activity Name" required onChange={(event) => { setActivityName(event.target.value) }} ></input>
+                        <br></br>
+                        <input type="text" placeholder="Description" onChange={(event) => { setActivityDescription(event.target.value) }} ></input>
+                        <br></br>
+                        <button className='create-button' type="submit">CREATE </button>
+                        <br></br>
+                    </center></fieldset>
                 </form>: null
             }
             <h1> Activities</h1>
