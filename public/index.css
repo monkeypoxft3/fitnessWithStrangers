@@ -148,6 +148,7 @@ h1 {
 }
 .logOut:hover {
     box-shadow: 2px 2px 50px 2px red;
+    cursor: pointer;
 }
 
 /*end of nav bar*/
@@ -257,10 +258,13 @@ iframe
     background-color: #e900ff;
     border: solid 5px #38eeff;
     border-radius: 15px;
+    
 }
 .routines {
     background-color: #f096f8;
     border: solid blue 3px;
+    margin-left: 50px;
+    text-align: center;
 }
 
 .formAddRoutine {
