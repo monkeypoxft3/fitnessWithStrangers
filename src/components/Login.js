@@ -33,12 +33,12 @@ export default function Login({ setToken, setLoggedIn, setUserId }) {
           }
         }}>
           {/* <label>Username:</label> */}
-          <input type="text" placeholder= "username" required value={username} onChange={(event) => { setUsername(event.target.value) }}></input>
+          <input type="text" placeholder= "Username" required value={username} onChange={(event) => { setUsername(event.target.value) }}></input>
           <br></br>
           {/* <label>Password:</label> */}
-          <input type="password" placeholder= "password" required value={password} onChange={(event) => { setPassword(event.target.value) }}></input>
+          <input type="password" placeholder= "Password" required value={password} onChange={(event) => { setPassword(event.target.value) }}></input>
           <br></br>
-          <button type="submit">Submit</button>
+          <button className='login-btn' type="submit">Submit</button>
         </form>
         <br></br>
         <Link to="/Register">Create Account</Link>

@@ -15,9 +15,9 @@ export default function Register({ setToken, setLoggedIn, setUserId }) {
       <br></br>
         <fieldset>
           
-          <legend>Sign Up!</legend>
+          
           <div className="formLogIn"><center>
-            <div>Register for Monkey Pox</div>
+            <div>Sign Up for Monkey Pox!</div>
             <br></br>
             <form onSubmit={async (event) => {
               event.preventDefault()
@@ -45,7 +45,7 @@ export default function Register({ setToken, setLoggedIn, setUserId }) {
               {/* <label>Desired Password</label> */}
               <input type="password" placeholder="Desired Password" required value={password} onChange={(event) => { setPassword(event.target.value) }}></input>
               <br></br>
-              <button type="submit">REGISTER</button>
+              <button className="register-btn" type="submit">REGISTER</button>
             </form>
             <br></br>
             <div>Already have Monkey Pox Credentials?</div>
