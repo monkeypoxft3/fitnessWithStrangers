@@ -1,14 +1,24 @@
 import React, {useState , useEffect} from "react";
-import { fetchUserRoutines,  }  from "../api";
+import { fetchUserRoutines, createRoutine, deleteRoutine, addActivityToRoutine, fetchAllActivities }  from "../api";
 import { BrowserRouter, useNavigate, Routes, Route, Link } from "react-router-dom";
 
 export default function MyRouintes({token, userId, username, routines, setRoutines, activities, setActivities}){
 
+    const [activityId, setActivityId] = useState(0);
+    const [routineName, setRoutineName] = useState('');
+    const [routineGoal, setRoutineGoal] = useState('');
+    const [isPublic, setIsPublic] = useState(false);
+    const [count, setCount] = useState(0);
+    const [duration, setDuration] = useState(0);
+
     async function getAllUserRoutinesAndActivites(username) {
         try {
-            const routinesResult = await fetchUserRoutines(username);
+            console.log(username)
+            const routinesResult = await fetchUserRoutines(token, username);
+            const activitiesResult = await fetchAllActivities();
             routinesResult.reverse();
             setRoutines(routinesResult);
+            setActivities(activitiesResult);
         } catch (err) {
             console.error("Error fetching routines!");
         }
@@ -22,9 +32,7 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
 
         return (
             <>
-                {/* //ADD ROUTINE */}
-         <div>
-                {   loggedIn ?
+            <div>
                     <fieldset>
                         <legend>Add Routine</legend>
                         <div className="formAddRoutine"><center>
@@ -34,7 +42,7 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
                                 event.preventDefault();
                                 const result = await createRoutine(token, routineName, routineGoal, isPublic);
                                 if(!result.error){
-                                    getAllPublicRoutinesAndActivites();
+                                    getAllUserRoutinesAndActivites(username);
 
                                 } else {
                                     alert(result.error);
@@ -52,8 +60,7 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
                                 
                             </form>
                         </center></div>
-                    </fieldset> : null
-                }
+                    </fieldset>
             </div>
             
             <div id='allRoutines'>
@@ -62,8 +69,9 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
                                     <div className="routine" key={routine.id}>
     
                                         <h3>{routine.name}</h3>
-                                        <p><span className='label'>Goal: </span>{routine.goal}</p>
-                                        <p><span className='label'>Creator: </span>{routine.creatorName}</p>
+                                        <p><span>Goal: </span>{routine.goal}</p>
+                                        <p><span>Creator: </span>{routine.creatorName}</p>
+                                        <p><span>Public? </span>{routine.isPublic}</p>
                                         {
                                         routine.creatorId === userId ? <button className="routineBtn">Edit Routine</button> : null
                                         }

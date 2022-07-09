@@ -57,6 +57,7 @@ export async function fetchAllPublicRoutines() {
 
 export async function createRoutine(token, routineName, routineGoal, isPublic) {
     try {
+        console.log(token,routineName,routineGoal,isPublic);
         const response = await fetch(`${BASE_URL}routines`, {
             method: "POST",
             headers: {
@@ -71,6 +72,7 @@ export async function createRoutine(token, routineName, routineGoal, isPublic) {
             })
         })
         let data = await response.json();
+        console.log(data);
         return data;
     } catch (err) {
         console.error("Not created");
@@ -93,7 +95,7 @@ export async function deleteRoutine(token, id) {
     }
 }
 
-export async function addActivityToRoutine(token, routineId, count, duration) {
+export async function addActivityToRoutine(token, routineId, activityId, count, duration) {
     try {
         const response = await fetch(`${BASE_URL}routines/${routineId}/activities`, {
             method: "POST",
@@ -115,11 +117,19 @@ export async function addActivityToRoutine(token, routineId, count, duration) {
     }
 }
 // MyRoutines ---------------------------------------------------------------- (1)
-export async function fetchUserRoutines(username) {
+export async function fetchUserRoutines(token, username) {
 
     try {
-        const response = await fetch(`${BASE_URL}users/${username}/routines`);
+
+        const response = await fetch(`${BASE_URL}users/${username}/routines`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
         let result = await response.json();
+
         return result;
     } catch (error) {
         console.error("Error fetching your routines!" + error);

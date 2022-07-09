@@ -30,12 +30,16 @@ function App(){
     useEffect(()=>{
         let savedToken = localStorage.getItem("token");
         let savedUserId = localStorage.getItem("userId");
+        let savedUsername = localStorage.getItem("user");
         if(savedToken){
             setLoggedIn(true);
             setToken(savedToken);
         }
         if(savedUserId){
             setUserId(Number(savedUserId));
+        }
+        if(savedUsername){
+            setUsername(savedUsername);
         }
     },[])
 

@@ -26,16 +26,18 @@ export default function Register({ username, setUsername, setToken, setLoggedIn,
               } else {
                 let result = await registerUser(username, password);
                 if (!result.error) {
-                  setToken(result.token)
-                  setLoggedIn(true)
-                  setUserId(result.user.id)
-                  localStorage.setItem("userId", result.user.id)
-                  localStorage.setItem("token", result.token)
-                  alert("Sucessfully Registered with Monkey Pox...Redirecting to your Home Page")
-                  navigate("/Home")
+                  setToken(result.token);
+                  setLoggedIn(true);
+                  setUserId(result.user.id);
+                  setUsername(result.user.username);
+                  localStorage.setItem("userId", result.user.id);
+                  localStorage.setItem("token", result.token);
+                  localStorage.setItem("user", result.user.username);
+                  alert("Sucessfully Registered with Monkey Pox...Redirecting to your Home Page");
+                  navigate("/Home");
                 }
                 else {
-                  alert("Username Already Exists!")
+                  alert("Username Already Exists!");
                 }
               }
             }}>

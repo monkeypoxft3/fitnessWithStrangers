@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../api";
 
-export default function Login({ setToken, setLoggedIn, setUserId }) {
+export default function Login({ username, setUsername, setToken, setLoggedIn, setUserId }) {
   
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
@@ -18,17 +18,19 @@ export default function Login({ setToken, setLoggedIn, setUserId }) {
           <div>Please enter credentials for Monkey Pox</div>
           <br></br>
           <form onSubmit={async (event) => {
-            event.preventDefault()
+            event.preventDefault();
             let result = await loginUser(username,password);
             if (!result.error) {
-              setToken(result.token)
-              setLoggedIn(true)
-              localStorage.setItem("token", result.token)
-              localStorage.setItem("userId", result.user.id)
-              setUserId(result.user.id)
-              navigate("/Home")
+              setToken(result.token);
+              setLoggedIn(true);
+              localStorage.setItem("token", result.token);
+              localStorage.setItem("userId", result.user.id);
+              localStorage.setItem("user", result.user.username);
+              setUserId(result.user.id);
+              setUsername(result.user.username);
+              navigate("/Home");
             } else {
-              alert("Login Failed...Remember your credentials!")
+              alert("Login Failed...Remember your credentials!");
             }
           }}>
             {/* <label>Username:</label> */}

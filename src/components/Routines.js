@@ -16,6 +16,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
             routinesResult.reverse();
             setRoutines(routinesResult);
             setActivities(activitiesResult);
+            console.log(routines,userId);
         } catch (err) {
             console.error("Error fetching routines!");
         }
@@ -53,7 +54,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                 <input type="text" placeholder="Routine goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
                                 <br></br>
                                 <label>Public Routine? </label>
-                                <input type="checkbox" value={isPublic} onChange={(event)=>{ setIsPublic(event.target.value) }}></input>
+                                <input type="checkbox" value={isPublic} checked={isPublic} onChange={()=>{ setIsPublic(!isPublic); console.log(!isPublic) }}></input>
                                 <br></br>
                                 <button type="submit" className="btnAddRoutine">Add Routine</button>
                                 
@@ -67,7 +68,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                 {   routines ? routines.map(routine => {
                                 return (
                                     <div className="routine" key={routine.id}>
-    
+                                        
                                         <h3>{routine.name}</h3>
                                         <p><span className='label'>Goal: </span>{routine.goal}</p>
                                         <p><span className='label'>Creator: </span>{routine.creatorName}</p>
@@ -81,7 +82,15 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                             routine.creatorId===userId ? 
                                                 <form onSubmit={(event) => {
                                                         event.preventDefault();
-                                                        addActivityToRoutine(token, routine.id, count, duration);
+                                                       
+                                                        let result = addActivityToRoutine(token, routine.id, activityId, count, duration);
+                                                        console.log(routine)
+                                                        if(!result.error){
+                                                            getAllPublicRoutinesAndActivites();
+                        
+                                                        } else {
+                                                            alert(result.error);
+                                                        }
                                                     }}>
                                                     <select 
                                                         className="addActivity"
@@ -103,8 +112,9 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                             <div className="routineActivity" key={activity.id}>
                                               <h3>{activity.name}</h3>
                                               <p><span className='label'>Description: </span>{activity.description}</p>
-                                              <p><span className='label'>Duration: </span>{activity.duration}</p>
                                               <p><span className='label'>Count: </span>{activity.count}</p>
+                                              <p><span className='label'>Duration: </span>{activity.duration}</p>
+                                              
                                             </div>
                                           ) : null
                                         }
