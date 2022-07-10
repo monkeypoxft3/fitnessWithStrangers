@@ -95,17 +95,17 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                                     alert(result.error);
                                                 }
                                             }}>
-                                                    <input type="text" placeholder="name" value={routineName} onChange={(event) => { setRoutineName(event.target.value) }}></input>
+                                                    <input type="text" placeholder="Name" value={routineName} onChange={(event) => { setRoutineName(event.target.value) }}></input>
                                                     <br></br>
-                                                    <input type="text" placeholder="goal" value={routineGoal} onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
+                                                    <input type="text" placeholder="Goal" value={routineGoal} onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
                                             </form>:null
-                                        }
+                                        }<br></br>
                                         {
-                                        routine.creatorId === userId ? <button className="routineBtn">Edit Routine</button> : null
-                                        }
+                                        routine.creatorId === userId ? <center><button className="routineBtn">Edit Routine</button></center> : null 
+                                        }<br></br>
                                         {
-                                        routine.creatorId === userId ? <button className="routineBtn" onClick={() => { deleteRoutine(token, routine.id) }}>Delete</button> : null
-                                        }
+                                        routine.creatorId === userId ? <center><button className="routineBtn" onClick={() => { deleteRoutine(token, routine.id) }}>Delete</button></center> : null
+                                        }<br></br>
                                         {
                                             routine.creatorId===userId ? 
                                                 <form onSubmit={async (event) => {
@@ -118,20 +118,22 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                                             alert(result.error);
                                                         }
                                                     }}>
-                                                    <select 
+                                                    <center><select 
                                                         className="addActivity"
                                                         value={activityId}
                                                         onChange={(event) => setActivityId(event.target.value)}>
                                                         {activities.map(selectedOption => {return <option key={selectedOption.id} value={selectedOption.id}>{selectedOption.name}</option>})}
-                                                    </select>
+                                                    </select></center><br></br>
                                                     
-                                                    <input type="text" placeholder="count" onChange={(event) => { setCount(event.target.value) }}></input>
+                                                    <input type="text" placeholder="Count" onChange={(event) => { setCount(event.target.value) }}></input>
                                                     <br></br>
-                                                    <input type="text" placeholder="duration" onChange={(event) => { setDuration(event.target.value) }}></input>
-                                                    <button type="submit" className="addActivityBtn">Add Activity</button>
+                                                    <input type="text" placeholder="Duration" onChange={(event) => { setDuration(event.target.value) }}></input>
+                                                    <br></br>
+                                                    <center><button type="submit" className="addActivityBtn">Add Activity</button></center>
+                                                    <br></br>
                                                 </form> : null
                                         }
-                                        <p><center><span className='label'>--Activities--</span></center></p>
+                                        {/* <p><center><span className='label'>--Activities--</span></center></p> */}
                                         
                                         {
                                          routine.activities ? routine.activities.map(activity => 
@@ -143,7 +145,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                                 <p><span className='label'>Count: </span>{activity.count}</p>
                                                 <p><span className='label'>Duration: </span>{activity.duration}</p>
                                                 </fieldset>
-                                                { routine.creatorId===userId ? <button className="editActivityBtn" onClick = { () => {buttonToggle()}}>Edit Activity</button>: null}
+                                                <br></br><center>{ routine.creatorId===userId ? <button className="editActivityBtn" onClick = { () => {buttonToggle()}}>Edit Activity</button>: null}</center><br></br>
                                                 
                                                 { routine.creatorId===userId ? 
                                                     <form id = "editActivity" onSubmit={ async (event) => {
@@ -155,10 +157,10 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                                             alert(result.error);
                                                         }
                                                         }}>
-                                                        <input type="text" placeholder="count" value={count} onChange={(event) => { setCount(event.target.value) }}></input>
+                                                        <input type="text" placeholder="Count" value={count} onChange={(event) => { setCount(event.target.value) }}></input>
                                                         <br></br>
-                                                        <input type="text" placeholder="duration" value={duration} onChange={(event) => { setDuration(event.target.value) }}></input>
-                                                        <button type="submit" className="submitActivityBtn">Submit Edit</button>
+                                                        <input type="text" placeholder="Duration" value={duration} onChange={(event) => { setDuration(event.target.value) }}></input>
+                                                        <br></br><center><button type="submit" className="submitActivityBtn">Submit Edit</button></center><br></br>
                                                     </form> : null
                                                 }
                                             </div>

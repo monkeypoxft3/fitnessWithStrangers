@@ -13,6 +13,7 @@ input[type=text]{
     font-size: 14px;
     display: block;
     margin: 0 auto;
+    border-color: #38eeff;
 }
 
 input[type=password]{
@@ -24,6 +25,7 @@ input[type=password]{
     box-sizing: border-box;
     text-align: center;
     font-size: 14px;
+    border-color: #38eeff;
 }
 
 a:link{
@@ -90,7 +92,7 @@ h1 {
 }
 
 .cards:hover {
-    background-color: rgb(125, 250, 208, 0.5);
+    background-color: rgba(100, 43, 88, 0.5);
 }
 
 
@@ -156,10 +158,7 @@ h1 {
 /*beginning of login*/
 
 .formLogIn {
-    /* display: flex-wrap; */
-    /* justify-content: center; */
-    /* align-items: center; */
-    /* min-height: 100%; */
+
     color: darkblue;
     background-color: #e900ff;
    
@@ -179,9 +178,7 @@ h1 {
 
 
 .formRegister  {
-    /* display: flex-wrap; */
-    /* justify-content: center; */
-    /* align-items: center; */
+    
     background-color: #e900ff;
     color: darkblue;
     
@@ -231,22 +228,15 @@ iframe
     background-color: #e900ff;
     border-radius: 10px;
     
-    /* display: flex;
-    flex-direction: row; */
+    
 }
 
 .activity-row {
     width: 49%; 
-    /* display: inline-flexbox; */
     display: inline-block;
-    /* justify-content: space-evenly; */
     justify-content: center;
-    
-
     flex-grow: 1;
-    /* flex-wrap: wrap; */
-    /* align-items: center; */
-    /* width: 40%;*/
+    
 }
 
 /*end of activities page*/ 
@@ -276,8 +266,36 @@ iframe
 .routine-box {
     background-color: #e900ff;
 }
-
+.routineBtn {
+    text-align: center;
+    font-size: 14px;
+    font-family: audiowide;
+    cursor: pointer;
+    padding: 5px;
+    
+}
 .btnAddRoutine {
+    text-align: center;
+    font-size: 14px;
+    font-family: audiowide;
+    cursor: pointer;
+    padding: 5px;
+}
+.submitActivityBtn {
+    text-align: center;
+    font-size: 14px;
+    font-family: audiowide;
+    cursor: pointer;
+    padding: 5px;
+}
+.addActivityBtn {
+    text-align: center;
+    font-size: 14px;
+    font-family: audiowide;
+    cursor: pointer;
+    padding: 5px;
+}
+.editActivityBtn {
     text-align: center;
     font-size: 14px;
     font-family: audiowide;
