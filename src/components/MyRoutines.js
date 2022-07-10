@@ -58,8 +58,9 @@ export default function MyRouintes({token, username, routines, setRoutines, acti
     return (
         <>
             <div>
-                <fieldset>
-                    <legend>Add Routine</legend>
+                <br></br>
+                <fieldset className='routine-box'>
+                    <legend>Create A New Routine</legend>
                     <div className="formAddRoutine"><center>
                         <div>Add A Monkey Pox Routine</div>
                         <br></br>
@@ -86,7 +87,7 @@ export default function MyRouintes({token, username, routines, setRoutines, acti
                     </center></div>
                 </fieldset>
             </div>
-        
+            <h1>My Routines</h1>
             <div id='allRoutines'>
                 {   routines ? routines.map(routine => {
                                 return (

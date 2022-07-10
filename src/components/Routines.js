@@ -54,16 +54,12 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
 
     return (
         <>
-
-            
             <div>
                 <br></br>
-                {loggedIn ?
-
+                { loggedIn ?
                     <fieldset className='routine-box'>
-
+                        <legend>Create A New Routine</legend>
                         <div className="formAddRoutine"><center>
-                            <br></br>
                             <div>Add A Monkey Pox Routine</div>
                             <br></br>
                             {/* Create Routine */}
@@ -77,7 +73,6 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                     alert(result.error);
                                 }
                             }}>
-
                                 <input type="text" placeholder="Routine Name" onChange={(event) => { setRoutineName(event.target.value) }}></input>
                                 <br></br>
                                 <input type="text" placeholder="Routine Goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
@@ -86,7 +81,6 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                 <input type="checkbox" checked={isPublic} onChange={() => setIsPublic(!isPublic)}></input>
                                 <br></br>
                                 <button type="submit" className="btnAddRoutine">Add Routine</button>
-
                             </form>
                         </center></div>
                     </fieldset> : null
@@ -149,8 +143,6 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                     </form> : null
                             }
                             { routine.creatorId === userId ? <button className="addActivityBtn" onClick={() => { addActivityToggle(routine.id) }} >Add Activity</button> : null }
-
-
                             { routine.activities ? routine.activities.map(activity =>
                                 <div className="routineActivity" key={activity.id}>
                                     <fieldset className='routines'>
@@ -180,7 +172,6 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                             ) : null }
                             <br></br>
                         </div>
-
                     )
                 }) : null }
             </div>
