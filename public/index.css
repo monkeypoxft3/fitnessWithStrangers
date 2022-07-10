@@ -302,6 +302,6 @@ iframe
 
   
 /*TOGGLE EDIT ACTIVITY*/
-.hidden{
+#editActivity{
     display:none;
 }

@@ -28,10 +28,16 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
     }, [])
 
     function buttonToggle() {
-        var t = document.getElementByClassName("editActivityBtn");
-        t.classList.toggle("hidden");
-        var f = document.getElementById("editActivity");
-        f.classList.toggle("hidden");
+        var t = document.getElementById("editActivity");
+        if (t.style.display === "none"){
+            t.style.display = "block";
+        } else{
+            t.style.display = "none"
+        }
+
+        // t.classList.toggle("hidden");
+        // var f = document.getElementById("editActivity");
+        // f.classList.toggle("hidden");
     }
     
     return (

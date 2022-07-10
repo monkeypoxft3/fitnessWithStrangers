@@ -89,7 +89,7 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
                                         <button className="routineBtn">Edit Routine</button>
                                         
                                         
-                                        <button className="routineBtn" onClick={() => { deleteRoutine(token, routine.id) }}>Delete Routine</button> : null
+                                        <button className="routineBtn" onClick={() => { deleteRoutine(token, routine.id) }}>Delete Routine</button> 
                                         
                                         {
                                             routine.creatorId===userId ? 
