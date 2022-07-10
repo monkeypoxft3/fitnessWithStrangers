@@ -1,8 +1,7 @@
 import React, {useState , useEffect} from "react";
 import { fetchUserRoutines, createRoutine, deleteRoutine, addActivityToRoutine, fetchAllActivities, editRoutine, editActivity }  from "../api";
-import { BrowserRouter, useNavigate, Routes, Route, Link } from "react-router-dom";
 
-export default function MyRouintes({token, userId, username, routines, setRoutines, activities, setActivities}){
+export default function MyRouintes({token, setToken, userId, username, setUsername, routines, setRoutines, activities, setActivities}){
 
     const [activityId, setActivityId] = useState(0);
     const [routineName, setRoutineName] = useState('');
@@ -12,31 +11,25 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
     const [duration, setDuration] = useState(0);
 
     useEffect(() => {
-
-        getAllUserRoutinesAndActivites(username);
-
-    }, [])
-
-    async function getAllUserRoutinesAndActivites(username) {
-        try {
-            const routinesResult = await fetchUserRoutines(token, username);
-            const activitiesResult = await fetchAllActivities();
-            if(!routinesResult.error) {
-                routinesResult.reverse();
-                setRoutines(routinesResult);
-                setActivities(activitiesResult);
-            } else {
-                alert(routinesResult.error);
+        
+        async function getAllUserRoutinesAndActivites() {
+            try {
+                const routinesResult = await fetchUserRoutines(token, username);
+                const activitiesResult = await fetchAllActivities();
+                if(!routinesResult.error) {
+                    routinesResult.reverse();
+                    setRoutines(routinesResult);
+                    setActivities(activitiesResult);
+                } else {
+                    console.error(routinesResult.error);
+                }
+            } catch (err) {
+                console.error("Error fetching routines!"+err);
             }
-        } catch (err) {
-            console.error("Error fetching routines!"+err);
         }
-    }
+        getAllUserRoutinesAndActivites()
 
-    function handleCheckbox() { 
-        setIsPublic(!isPublic);
-        console.log(isPublic)
-    } 
+    }, [token])    
 
         return (
             <>
@@ -56,7 +49,7 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
                                 } else {
                                     alert(result.error);
                                 }
-                            }}>
+                                }}>
 
                                 <input type="text" placeholder="Routine name" onChange={(event) => { setRoutineName(event.target.value) }}></input>
                                 <br></br>
@@ -73,6 +66,7 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
             </div>
             
             <div id='allRoutines'>
+
                 {   routines ? routines.map(routine => {
                                 return (
                                     <div className="routine" key={routine.id}>
