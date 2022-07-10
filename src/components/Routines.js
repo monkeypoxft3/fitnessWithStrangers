@@ -28,19 +28,28 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
     }, [])
 
     function activityToggle() {
-        var t = document.getElementById("editActivity");
-        if (t.style.display === "none") {
-            t.style.display = "block";
+        var toggle = document.getElementById("editActivity");
+        if (toggle.style.display === "none") {
+            toggle.style.display = "block";
         } else {
-            t.style.display = "none"
+            toggle.style.display = "none"
         }
     }
     function routineToggle() {
-        var t = document.getElementById("editRoutine");
-        if (t.style.display === "none") {
-            t.style.display = "block";
+        var toggle = document.getElementById("editRoutine");
+        if (toggle.style.display === "none") {
+            toggle.style.display = "block";
         } else {
-            t.style.display = "none"
+            toggle.style.display = "none"
+        }
+    }
+
+        function addActivityToggle() {
+        var toggle = document.getElementById("addActivity");
+        if (toggle.style.display === "none") {
+            toggle.style.display = "block";
+        } else {
+            toggle.style.display = "none"
         }
     }
     return (
@@ -116,7 +125,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                             }
                             {
                                 routine.creatorId === userId ?
-                                    <form onSubmit={async (event) => {
+                                    <form id="addActivity" onSubmit={async (event) => {
                                         event.preventDefault();
                                         let result = addActivityToRoutine(token, routine.id, activityId, count, duration);
                                         if (!result.error) {
@@ -136,9 +145,10 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                         <input type="text" placeholder="count" onChange={(event) => { setCount(event.target.value) }}></input>
                                         <br></br>
                                         <input type="text" placeholder="duration" onChange={(event) => { setDuration(event.target.value) }}></input>
-                                        <button type="submit" className="addActivityBtn">Add Activity</button>
+                                        <button type="submit" className="addActivityBtn">Submit Activity</button>
                                     </form> : null
-                            }
+                                    }
+                                    {routine.creatorId === userId ? <button className="addActivityBtn" onClick={() => { addActivityToggle() }} >Add Activity</button> : null}
                             <p><span className='label'>--Activities--</span></p>
 
                             {
