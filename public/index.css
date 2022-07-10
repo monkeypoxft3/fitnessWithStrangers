@@ -307,10 +307,7 @@ iframe
 
 
   
-/*TOGGLE EDIT ACTIVITY*/
-#editActivity{
-    display:none;
-}
-#editRoutine{
+/*TOGGLE FORMS*/
+.editActivityForm,.addActivityForm,.editRoutineForm{
     display:none;
 }

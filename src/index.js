@@ -45,11 +45,9 @@ function App(){
 
     function Logout(){
         localStorage.removeItem("token");
-        setLoggedIn(false);
         setToken("");
         alert("You've successfully logged out and you're being redirected to the homepage!")
         navigate("/");
-
     }
 
     
@@ -62,10 +60,10 @@ function App(){
             <Route path = "/" element={<Home />}></Route>
             <Route path = "Routines" element={<Routines loggedIn={loggedIn} token={token} userId={userId} routines={routines} setRoutines={setRoutines} activities={activities} setActivities={setActivities}/>}></Route>
             <Route path = "Login" element={<Login setToken={setToken} setLoggedIn={setLoggedIn} setUserId={setUserId} username={username} setUsername={setUsername}/>}></Route>
-            <Route path = "Home" element={<Home token={token} />}></Route>
+            <Route path = "Home" element={<Home />}></Route>
             <Route path = "Register" element={<Register setToken={setToken} setLoggedIn={setLoggedIn} setUserId={setUserId} username={username} setUsername={setUsername}/>}></Route>
-            <Route path = "MyRoutines" element={<MyRoutines token={token} setToken={setToken} userId={userId} routines={routines} setRoutines={setRoutines} activities={activities} setActivities={setActivities} username={username} setUsername={setUsername}/>}></Route>
-            <Route path = "Activities" element={<Activities loggedIn = {loggedIn} token={token} activities={activities} setActivities={setActivities}/>}></Route>
+            <Route path = "MyRoutines" element={<MyRoutines token={token} routines={routines} setRoutines={setRoutines} activities={activities} setActivities={setActivities} username={username}/>}></Route>
+            <Route path = "Activities" element={<Activities loggedIn={loggedIn} token={token} activities={activities} setActivities={setActivities}/>}></Route>
             <Route path = "*" element={<Error/>}></Route>
 
         </Routes>
