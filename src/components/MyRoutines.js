@@ -11,23 +11,29 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
     const [count, setCount] = useState(0);
     const [duration, setDuration] = useState(0);
 
+    useEffect(() => {
+
+        getAllUserRoutinesAndActivites(username);
+
+    }, [])
+
     async function getAllUserRoutinesAndActivites(username) {
         try {
             const routinesResult = await fetchUserRoutines(token, username);
             const activitiesResult = await fetchAllActivities();
-            routinesResult.reverse();
-            setRoutines(routinesResult);
-            setActivities(activitiesResult);
+            if(!routinesResult.error) {
+                routinesResult.reverse();
+                setRoutines(routinesResult);
+                setActivities(activitiesResult);
+            } else {
+                alert(routinesResult.error);
+            }
         } catch (err) {
-            console.error("Error fetching routines!");
+            console.error("Error fetching routines!"+err);
         }
     }
 
-    useEffect(() => {
-        
-        getAllUserRoutinesAndActivites(username);
-
-    }, [])
+    
 
         return (
             <>
@@ -53,7 +59,7 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
                                 <input type="text" placeholder="Routine goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
                                 <br></br>
                                 <label>Public Routine? </label>
-                                <input type="checkbox" onChange={ ()=>{ setIsPublic(!isPublic) }}></input>
+                                <input type="checkbox" checked={isPublic} onChange={()=>{ setIsPublic(!isPublic) }}></input>
                                 <br></br>
                                 <button type="submit" className="btnAddRoutine">Add Routine</button>
                                 
@@ -70,7 +76,7 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
                                         <h3>{routine.name}</h3>
                                         <p><span>Goal: </span>{routine.goal}</p>
                                         <p><span>Creator: </span>{routine.creatorName}</p>
-                                        <p><span>Public? </span>{routine.isPublic}</p>
+                                        <p><span>This routine is </span>{routine.isPublic ? "Public" : "Private"}{console.log(routine.isPublic)}</p>
                                         <form onSubmit={ async (event) => {
                                                 event.preventDefault();
                                                 const result = await editRoutine(token, routine.id, routineName, routineGoal);
@@ -85,13 +91,14 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
                                                     <br></br>
                                                     <input type="text" placeholder="goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
                                                     <label>Public Routine? </label>
-                                                    <input type="checkbox" value={isPublic} checked={isPublic} onChange={() => { setIsPublic(!isPublic); console.log(!isPublic) }}></input>
+                                                    <input type="checkbox" checked={isPublic} onChange={()=>{ setIsPublic(!isPublic) }}></input>
+                                                    <button type="submit" className="editRoutine">Submit Changes</button>
                                             </form>
                                         
-                                        <button className="routineBtn">Edit Routine</button>
+                                        <button className="routineEditBtn">Edit Routine</button>
                                         
                                         
-                                        <button className="routineBtn" onClick={() => { deleteRoutine(token, routine.id) }}>Delete Routine</button> 
+                                        <button className="routineBtn" onClick={() => { deleteRoutine(token, routine.id) }}>Delete Routine</button>
                                         
                                         {
                                             routine.creatorId===userId ? 
