@@ -28,9 +28,9 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
     }, [])
 
     function buttonToggle() {
-        var t = document.getElementByClassName("editActivityBtn");
-        t.classList.toggle("hidden");
+        var t = document.getElementById("editActivityBtn");
         var f = document.getElementById("editActivity");
+        t.classList.toggle("hidden");
         f.classList.toggle("hidden");
     }
     
@@ -64,7 +64,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                 <input type="text" placeholder="Routine Goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
                                 <br></br>
                                 <label>Public Routine? </label>
-                                <input type="checkbox" value={isPublic} checked={isPublic} onChange={()=>{ setIsPublic(!isPublic); console.log(!isPublic) }}></input>
+                                <input type="checkbox" value={isPublic} checked={isPublic} onChange={()=>{ setIsPublic(!isPublic) }}></input>
                                 <br></br>
                                 <button type="submit" className="btnAddRoutine">Add Routine</button>
                                 
@@ -143,7 +143,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                                 <p><span className='label'>Count: </span>{activity.count}</p>
                                                 <p><span className='label'>Duration: </span>{activity.duration}</p>
                                                 </fieldset>
-                                                { routine.creatorId===userId ? <button className="editActivityBtn" onClick = { () => {buttonToggle()}}>Edit Activity</button>: null}
+                                                { routine.creatorId===userId ? <button id="editActivityBtn" onClick = { () => {buttonToggle()}}>Edit Activity</button>: null}
                                                 
                                                 { routine.creatorId===userId ? 
                                                     <form id = "editActivity" onSubmit={ async (event) => {
