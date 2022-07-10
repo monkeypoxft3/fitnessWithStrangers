@@ -1,5 +1,5 @@
 import React, {useState , useEffect} from "react";
-import { fetchUserRoutines, createRoutine, deleteRoutine, addActivityToRoutine, fetchAllActivities }  from "../api";
+import { fetchUserRoutines, createRoutine, deleteRoutine, addActivityToRoutine, fetchAllActivities, editRoutine, editActivity }  from "../api";
 import { BrowserRouter, useNavigate, Routes, Route, Link } from "react-router-dom";
 
 export default function MyRouintes({token, userId, username, routines, setRoutines, activities, setActivities}){
@@ -53,7 +53,7 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
                                 <input type="text" placeholder="Routine goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
                                 <br></br>
                                 <label>Public Routine? </label>
-                                <input type="checkbox" value={isPublic} onChange={(event)=>{ setIsPublic(event.target.value) }}></input>
+                                <input type="checkbox" onChange={ ()=>{ setIsPublic(!isPublic) }}></input>
                                 <br></br>
                                 <button type="submit" className="btnAddRoutine">Add Routine</button>
                                 
@@ -81,9 +81,11 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
                                                     alert(result.error);
                                                 }
                                             }}>
-                                                    <input type="text" placeholder="name" value={routineName} onChange={(event) => { setRoutineName(event.target.value) }}></input>
+                                                    <input type="text" placeholder="name" onChange={(event) => { setRoutineName(event.target.value) }}></input>
                                                     <br></br>
-                                                    <input type="text" placeholder="goal" value={routineGoal} onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
+                                                    <input type="text" placeholder="goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
+                                                    <label>Public Routine? </label>
+                                                    <input type="checkbox" value={isPublic} checked={isPublic} onChange={() => { setIsPublic(!isPublic); console.log(!isPublic) }}></input>
                                             </form>
                                         
                                         <button className="routineBtn">Edit Routine</button>
@@ -128,9 +130,12 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
                                                             alert(result.error);
                                                         }
                                                         }}>
-                                                        <input type="text" placeholder="count" value={count} onChange={(event) => { setCount(event.target.value) }}></input>
+                                                        <input type="text" placeholder="count" onChange={(event) => { setCount(event.target.value) }}></input>
                                                         <br></br>
-                                                        <input type="text" placeholder="duration" value={duration} onChange={(event) => { setDuration(event.target.value) }}></input>
+                                                        <input type="text" placeholder="duration" onChange={(event) => { setDuration(event.target.value) }}></input>
+                                                        <br></br>
+                                                        <label>Public Routine? </label>
+                                                        <input type="checkbox" checked={isPublic} onChange={() => { setIsPublic(!isPublic); console.log(!isPublic) }}></input>
                                                         <button type="submit" className="submitActivityBtn">Submit Edit</button>
                                                 </form>
                                             </div>

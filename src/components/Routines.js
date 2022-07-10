@@ -82,7 +82,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                 <input type="text" placeholder="Routine Goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
                                 <br></br>
                                 <label>Public Routine? </label>
-                                <input type="checkbox" value={isPublic} checked={isPublic} onChange={() => { setIsPublic(!isPublic); console.log(!isPublic) }}></input>
+                                <input type="checkbox" checked={isPublic} onChange={() => { setIsPublic(!isPublic); console.log(!isPublic) }}></input>
                                 <br></br>
                                 <button type="submit" className="btnAddRoutine">Add Routine</button>
 
@@ -113,13 +113,16 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                         alert(result.error);
                                     }
                                 }}>
-                                    <input type="text" placeholder="name" value={routineName} onChange={(event) => { setRoutineName(event.target.value) }}></input>
+                                    <input type="text" placeholder="name" onChange={(event) => { setRoutineName(event.target.value) }}></input>
                                     <br></br>
-                                    <input type="text" placeholder="goal" value={routineGoal} onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
+                                    <input type="text" placeholder="goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
+                                    <br></br>
+                                    <label>Public Routine? </label>
+                                    <input type="checkbox" checked={isPublic} onChange={() => { setIsPublic(!isPublic); console.log(!isPublic) }}></input>
                                     <button type="submit" className="editRoutine">Submit Changes</button>
                                 </form> : null
                             }
-                            {routine.creatorId === userId ? <button className="routineBtn" onClick={() => { routineToggle() }} >Edit Routine</button> : null}
+                            {   routine.creatorId === userId ? <button className="routineBtn" onClick={() => { routineToggle() }} >Edit Routine</button> : null}
                             {
                                 routine.creatorId === userId ? <button className="routineBtn" onClick={() => { deleteRoutine(token, routine.id) }}>Delete</button> : null
                             }
@@ -173,9 +176,9 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                                     alert(result.error);
                                                 }
                                             }}>
-                                                <input type="text" placeholder="count" value={count} onChange={(event) => { setCount(event.target.value) }}></input>
+                                                <input type="text" placeholder="count" onChange={(event) => { setCount(event.target.value) }}></input>
                                                 <br></br>
-                                                <input type="text" placeholder="duration" value={duration} onChange={(event) => { setDuration(event.target.value) }}></input>
+                                                <input type="text" placeholder="duration" onChange={(event) => { setDuration(event.target.value) }}></input>
                                                 <button type="submit" className="submitActivityBtn">Submit Edit</button>
                                             </form> : null
                                         }
