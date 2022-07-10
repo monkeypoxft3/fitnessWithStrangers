@@ -44,7 +44,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
         }
     }
 
-        function addActivityToggle() {
+    function addActivityToggle() {
         var toggle = document.getElementById("addActivity");
         if (toggle.style.display === "none") {
             toggle.style.display = "block";
@@ -52,10 +52,14 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
             toggle.style.display = "none"
         }
     }
+
+    function handleCheckbox() {
+        setIsPublic(!isPublic);
+    }
     return (
         <>
 
-            {/* //ADD ROUTINE */}
+            
             <div>
                 <br></br>
                 {loggedIn ?
@@ -66,6 +70,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                             <br></br>
                             <div>Add A Monkey Pox Routine</div>
                             <br></br>
+                            {/* Create Routine */}
                             <form onSubmit={async (event) => {
                                 event.preventDefault();
                                 const result = await createRoutine(token, routineName, routineGoal, isPublic);
@@ -82,7 +87,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                 <input type="text" placeholder="Routine Goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
                                 <br></br>
                                 <label>Public Routine? </label>
-                                <input type="checkbox" checked={isPublic} onChange={() => { setIsPublic(!isPublic); console.log(!isPublic) }}></input>
+                                <input type="checkbox" checked={isPublic} onChange={handleCheckbox}></input>
                                 <br></br>
                                 <button type="submit" className="btnAddRoutine">Add Routine</button>
 
@@ -92,20 +97,19 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                 }
             </div>
             <h1> Routines </h1>
-
             <div id='allRoutines'>
-                {routines ? routines.map(routine => {
+                { routines ? routines.map(routine => {
                     return (
                         <div className="routine" key={routine.id}>
 
                             <h3>{routine.name}</h3>
                             <p><span className='label'>Goal: </span>{routine.goal}</p>
                             <p><span className='label'>Creator: </span>{routine.creatorName}</p>
-
+                            {/* Edit Routine */}
                             {routine.creatorId === userId ?
                                 <form id="editRoutine" onSubmit={async (event) => {
                                     event.preventDefault();
-                                    const result = await editRoutine(token, routine.id, routineName, routineGoal);
+                                    const result = await editRoutine(token, routine.id, routineName, routineGoal, isPublic);
                                     if (!result.error) {
                                         getAllPublicRoutinesAndActivites()
 
@@ -122,12 +126,10 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                     <button type="submit" className="editRoutine">Submit Changes</button>
                                 </form> : null
                             }
-                            {   routine.creatorId === userId ? <button className="routineBtn" onClick={() => { routineToggle() }} >Edit Routine</button> : null}
-                            {
-                                routine.creatorId === userId ? <button className="routineBtn" onClick={() => { deleteRoutine(token, routine.id) }}>Delete</button> : null
-                            }
-                            {
-                                routine.creatorId === userId ?
+                            { routine.creatorId === userId ? <button className="routineBtn" onClick={() => { routineToggle() }} >Edit Routine</button> : null }
+                            { routine.creatorId === userId ? <button className="routineBtn" onClick={() => { deleteRoutine(token, routine.id) }}>Delete</button> : null }
+                            {/* Add Activity To Routine */}
+                            { routine.creatorId === userId ?
                                     <form id="addActivity" onSubmit={async (event) => {
                                         event.preventDefault();
                                         let result = addActivityToRoutine(token, routine.id, activityId, count, duration);
@@ -137,7 +139,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                         } else {
                                             alert(result.error);
                                         }
-                                    }}>
+                                        }}>
                                         <select
                                             className="addActivity"
                                             value={activityId}
@@ -150,47 +152,43 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                         <input type="text" placeholder="duration" onChange={(event) => { setDuration(event.target.value) }}></input>
                                         <button type="submit" className="addActivityBtn">Submit Activity</button>
                                     </form> : null
-                                    }
-                                    {routine.creatorId === userId ? <button className="addActivityBtn" onClick={() => { addActivityToggle() }} >Add Activity</button> : null}
+                            }
+                            { routine.creatorId === userId ? <button className="addActivityBtn" onClick={() => { addActivityToggle() }} >Add Activity</button> : null }
                             <p><span className='label'>--Activities--</span></p>
 
-                            {
-                                routine.activities ? routine.activities.map(activity =>
-
-                                    <div className="routineActivity" key={activity.id}>
-                                        <fieldset className='routines'>
-                                            <legend>{activity.name}</legend>
-                                            <p><span className='label'>Description: </span>{activity.description}</p>
-                                            <p><span className='label'>Count: </span>{activity.count}</p>
-                                            <p><span className='label'>Duration: </span>{activity.duration}</p>
-                                        </fieldset>
-                                        {routine.creatorId === userId ? <button className="editActivityBtn" onClick={() => { activityToggle() }}>Edit Activity</button> : null}
-
-                                        {routine.creatorId === userId ?
-                                            <form id="editActivity" onSubmit={async (event) => {
-                                                event.preventDefault();
-                                                const result = await editActivity(token, activity.routineActivityId, count, duration);
-                                                if (!result.error) {
-                                                    getAllPublicRoutinesAndActivites()
-                                                } else {
-                                                    alert(result.error);
-                                                }
+                            { routine.activities ? routine.activities.map(activity =>
+                                <div className="routineActivity" key={activity.id}>
+                                    <fieldset className='routines'>
+                                        <legend>{activity.name}</legend>
+                                        <p><span className='label'>Description: </span>{activity.description}</p>
+                                        <p><span className='label'>Count: </span>{activity.count}</p>
+                                        <p><span className='label'>Duration: </span>{activity.duration}</p>
+                                    </fieldset>
+                                    { routine.creatorId === userId ? <button className="editActivityBtn" onClick={() => { activityToggle() }}>Edit Activity</button> : null }
+                                    {/* Edit Activity */}
+                                    { routine.creatorId === userId ?
+                                        <form id="editActivity" onSubmit={async (event) => {
+                                            event.preventDefault();
+                                            const result = await editActivity(token, activity.routineActivityId, count, duration);
+                                            if (!result.error) {
+                                                getAllPublicRoutinesAndActivites()
+                                            } else {
+                                                alert(result.error);
+                                            }
                                             }}>
-                                                <input type="text" placeholder="count" onChange={(event) => { setCount(event.target.value) }}></input>
-                                                <br></br>
-                                                <input type="text" placeholder="duration" onChange={(event) => { setDuration(event.target.value) }}></input>
-                                                <button type="submit" className="submitActivityBtn">Submit Edit</button>
-                                            </form> : null
-                                        }
-                                    </div>
-                                ) : null
-                            }
+                                            <input type="text" placeholder="count" onChange={(event) => { setCount(event.target.value) }}></input>
+                                            <br></br>
+                                            <input type="text" placeholder="duration" onChange={(event) => { setDuration(event.target.value) }}></input>
+                                            <button type="submit" className="submitActivityBtn">Submit Edit</button>
+                                        </form> : null
+                                    }
+                                </div>
+                            ) : null }
                             <br></br>
                         </div>
 
                     )
-                }) : null
-                }
+                }) : null }
             </div>
         </>
     )

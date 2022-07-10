@@ -25,7 +25,13 @@ input[type=password]{
     text-align: center;
     font-size: 14px;
 }
-
+button {
+    text-align: center;
+    font-size: 14px;
+    font-family: audiowide;
+    cursor: pointer;
+    padding: 5px;
+    } 
 a:link{
     text-shadow: 2px 2px 1px rgba(0,0,0,0.3), 0 0px 15px #fff, 0 0 10px #38eeff, 0 0 50px #38eeff;
     text-decoration: none;

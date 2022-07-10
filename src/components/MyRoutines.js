@@ -33,7 +33,10 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
         }
     }
 
-    
+    function handleCheckbox() { 
+        setIsPublic(!isPublic);
+        console.log(isPublic)
+    } 
 
         return (
             <>
@@ -43,6 +46,7 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
                         <div className="formAddRoutine"><center>
                             <div>Add A Monkey Pox Routine</div>
                             <br></br>
+                            {/* Create Routine */}
                             <form onSubmit={async (event) => {
                                 event.preventDefault();
                                 const result = await createRoutine(token, routineName, routineGoal, isPublic);
@@ -59,7 +63,7 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
                                 <input type="text" placeholder="Routine goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
                                 <br></br>
                                 <label>Public Routine? </label>
-                                <input type="checkbox" checked={isPublic} onChange={()=>{ setIsPublic(!isPublic) }}></input>
+                                <input type="checkbox" onChange={()=>{ setIsPublic(!isPublic) }}></input>
                                 <br></br>
                                 <button type="submit" className="btnAddRoutine">Add Routine</button>
                                 
@@ -76,32 +80,32 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
                                         <h3>{routine.name}</h3>
                                         <p><span>Goal: </span>{routine.goal}</p>
                                         <p><span>Creator: </span>{routine.creatorName}</p>
-                                        <p><span>This routine is </span>{routine.isPublic ? "Public" : "Private"}{console.log(routine.isPublic)}</p>
+                                        <p><span>This routine is </span>{routine.isPublic ? "Public" : "Private"}</p>
+                                        {/* Edit Routine */}
                                         <form onSubmit={ async (event) => {
-                                                event.preventDefault();
-                                                const result = await editRoutine(token, routine.id, routineName, routineGoal);
-                                                if(!result.error){
-                                                    getAllUserRoutinesAndActivites(username);
+                                            event.preventDefault();
+                                            const result = await editRoutine(token, routine.id, routineName, routineGoal, isPublic);
+                                            if(!result.error){
+                                                getAllUserRoutinesAndActivites(username);
 
-                                                }else{
-                                                    alert(result.error);
-                                                }
+                                            }else{
+                                                alert(result.error);
+                                            }
                                             }}>
-                                                    <input type="text" placeholder="name" onChange={(event) => { setRoutineName(event.target.value) }}></input>
-                                                    <br></br>
-                                                    <input type="text" placeholder="goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
-                                                    <label>Public Routine? </label>
-                                                    <input type="checkbox" checked={isPublic} onChange={()=>{ setIsPublic(!isPublic) }}></input>
-                                                    <button type="submit" className="editRoutine">Submit Changes</button>
-                                            </form>
+                                                <input type="text" placeholder="name" onChange={(event) => { setRoutineName(event.target.value) }}></input>
+                                                <br></br>
+                                                <input type="text" placeholder="goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
+                                                <label>Public Routine? </label>
+                                                <input type="checkbox" checked={isPublic} onChange={() => setIsPublic(!isPublic)}></input>
+                                                <button type="submit" className="editRoutine">Submit Changes</button>
+                                        </form>
                                         
                                         <button className="routineEditBtn">Edit Routine</button>
                                         
                                         
                                         <button className="routineBtn" onClick={() => { deleteRoutine(token, routine.id) }}>Delete Routine</button>
-                                        
-                                        {
-                                            routine.creatorId===userId ? 
+                                        {/* Add Activity To Routine */}
+                                        { routine.creatorId===userId ? 
                                                 <form onSubmit={(event) => {
                                                         event.preventDefault();
                                                         addActivityToRoutine(token, routine.id, count, duration);
@@ -120,9 +124,8 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
                                                 </form> : null
                                         }
                                         <p><span className='label'>--Activities--</span></p>
-                                        
-                                        {
-                                         routine.activities ? routine.activities.map(activity => 
+                                        {/* Edit Activity */}
+                                        { routine.activities ? routine.activities.map(activity => 
                                             <div className="routineActivity" key={activity.id}>
                                                 <h3>{activity.name}</h3>
                                                 <p><span className='label'>Description: </span>{activity.description}</p>
@@ -141,8 +144,6 @@ export default function MyRouintes({token, userId, username, routines, setRoutin
                                                         <br></br>
                                                         <input type="text" placeholder="duration" onChange={(event) => { setDuration(event.target.value) }}></input>
                                                         <br></br>
-                                                        <label>Public Routine? </label>
-                                                        <input type="checkbox" checked={isPublic} onChange={() => { setIsPublic(!isPublic); console.log(!isPublic) }}></input>
                                                         <button type="submit" className="submitActivityBtn">Submit Edit</button>
                                                 </form>
                                             </div>
