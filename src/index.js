@@ -45,7 +45,11 @@ function App(){
 
     function Logout(){
         localStorage.removeItem("token");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("user");
         setToken("");
+        setUserId(0);
+        setUsername("");
         alert("You've successfully logged out and you're being redirected to the homepage!")
         navigate("/");
     }
