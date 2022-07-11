@@ -60,6 +60,7 @@ export default function MyRouintes({token, username, routines, setRoutines, acti
         <>
             <div>
                 <br></br>
+
                 <fieldset className='routine-box'>
                     <legend>Create A New Routine</legend>
                     <div className="formAddRoutine"><center>
@@ -72,10 +73,12 @@ export default function MyRouintes({token, username, routines, setRoutines, acti
                             if(!result.error){
                                 getAllUserRoutinesAndActivites(username);
 
+
                             } else {
                                 alert(result.error);
                             }
                             }}>
+
                             <input type="text" placeholder="Routine name" onChange={(event) => { setRoutineName(event.target.value) }}></input>
                             <br></br>
                             <input type="text" placeholder="Routine goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
@@ -89,6 +92,7 @@ export default function MyRouintes({token, username, routines, setRoutines, acti
                 </fieldset>
             </div>
             <h1>My Routines</h1>
+
             <div id='allRoutines'>
                 {   routines ? routines.map(routine => {
                                 return (
@@ -108,6 +112,7 @@ export default function MyRouintes({token, username, routines, setRoutines, acti
                                                 alert(result.error);
                                             }
                                             }}>
+
                                                 <input type="text" placeholder="name" onChange={(event) => { setRoutineName(event.target.value) }}></input>
                                                 <br></br>
                                                 <input type="text" placeholder="goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
@@ -137,6 +142,7 @@ export default function MyRouintes({token, username, routines, setRoutines, acti
                                         <button className="addActivityBtn" onClick={() => { addActivityToggle(routine.id) }} >Add Activity</button>
                                         {/* Edit Activity */}
                                         { routine.activities ? routine.activities.map(activity => 
+
                                             <div className="routineActivity" key={activity.id}>
                                                 <h3>{activity.name}</h3>
                                                 <p><span className='label'>Description: </span>{activity.description}</p>
@@ -151,11 +157,13 @@ export default function MyRouintes({token, username, routines, setRoutines, acti
                                                             alert(result.error);
                                                         }
                                                         }}>
+
                                                         <input type="text" placeholder="count" onChange={(event) => { setCount(event.target.value) }}></input>
                                                         <br></br>
                                                         <input type="text" placeholder="duration" onChange={(event) => { setDuration(event.target.value) }}></input>
                                                         <br></br>
                                                         <button type="submit" className="submitActivityBtn">Submit Edit</button>
+
                                                 </form>
                                                 <button className="editActivityBtn" onClick={() => { activityToggle(activity.id) }}>Edit Activity</button>
                                             </div>
@@ -165,6 +173,7 @@ export default function MyRouintes({token, username, routines, setRoutines, acti
                     )
                 }) : null
                 }
+                <br></br>
             </div>
         </>
     )

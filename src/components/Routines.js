@@ -92,6 +92,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                     return (
                         <div className="routine" key={routine.id}>
 
+
                             <h3>{routine.name}</h3>
                             <p><span className='label'>Goal: </span>{routine.goal}</p>
                             <p><span className='label'>Creator: </span>{routine.creatorName}</p>
@@ -172,6 +173,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                             ) : null }
                             <br></br>
                         </div>
+
                     )
                 }) : null }
             </div>
