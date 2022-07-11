@@ -248,7 +248,11 @@ iframe
 /*end of activities page*/ 
 
 
-/*routines page*/
+/*routines pages*/
+
+.addActivity {
+    font-size: 28px;
+}
 
 .routine{
     background-color: #e900ff;
@@ -279,6 +283,16 @@ iframe
     cursor: pointer;
     padding: 5px;
     
+}
+.delete-btn {
+    border-color: #e70a0a;
+    background-color: rgb(231, 149, 149);
+    border-radius: 10px;
+}
+.deleteRoutineBtn {
+    border-color: #e70a0a;
+    background-color: rgb(231, 149, 149);
+    border-radius: 10px;
 }
 .btnAddRoutine {
     text-align: center;
