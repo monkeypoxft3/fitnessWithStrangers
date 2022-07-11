@@ -10,23 +10,24 @@ export default function MyRouintes({token, username, routines, setRoutines, acti
     const [count, setCount] = useState(0);
     const [duration, setDuration] = useState(0);
 
+    async function getAllUserRoutinesAndActivites() {
+        try {
+            const routinesResult = await fetchUserRoutines(token, username);
+            const activitiesResult = await fetchAllActivities();
+            if(!routinesResult.error) {
+                routinesResult.reverse();
+                setRoutines(routinesResult);
+                setActivities(activitiesResult);
+            } else {
+                console.error(routinesResult.error);
+            }
+        } catch (err) {
+            console.error("Error fetching routines!"+err);
+        }
+    }
+
     useEffect(() => {
         
-        async function getAllUserRoutinesAndActivites() {
-            try {
-                const routinesResult = await fetchUserRoutines(token, username);
-                const activitiesResult = await fetchAllActivities();
-                if(!routinesResult.error) {
-                    routinesResult.reverse();
-                    setRoutines(routinesResult);
-                    setActivities(activitiesResult);
-                } else {
-                    console.error(routinesResult.error);
-                }
-            } catch (err) {
-                console.error("Error fetching routines!"+err);
-            }
-        }
         getAllUserRoutinesAndActivites()
 
     }, [token])    
