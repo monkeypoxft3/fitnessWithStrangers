@@ -1,7 +1,7 @@
 import {useState , useEffect} from "react";
 import { fetchUserRoutines, createRoutine, deleteRoutine, addActivityToRoutine, fetchAllActivities, editRoutine, editActivity }  from "../api";
 
-export default function MyRouintes({token, username, routines, setRoutines, activities, setActivities}){
+export default function MyRoutines({token, username, routines, setRoutines, activities, setActivities}){
 
     const [activityId, setActivityId] = useState(0);
     const [routineName, setRoutineName] = useState('');
@@ -139,7 +139,7 @@ export default function MyRouintes({token, username, routines, setRoutines, acti
                                                 onChange={(event) => setActivityId(event.target.value)}>
                                                 { activities.map(selectedOption => {return <option key={selectedOption.id} value={selectedOption.id}>{selectedOption.name}</option>})}
                                                 
-                                            </select></center>
+                                            </select>
                                             <br></br><input type="text" placeholder="count" onChange={(event) => { setCount(event.target.value) }}></input>
                                             <br></br>
                                             <input type="text" placeholder="duration" onChange={(event) => { setDuration(event.target.value) }}></input>
@@ -155,12 +155,12 @@ export default function MyRouintes({token, username, routines, setRoutines, acti
                                                 <h3>{activity.name}</h3>
                                                 <p><span>Description: </span>{activity.description}</p>
                                                 <p><span>Duration: </span>{activity.duration}</p>
-                                                <p><span>Count: </span>{activity.count}</p>
-                                                <form id = {`editActivity${routine.id}`} className="editActivityForm" onSubmit={ async (event) => {
+                                                <p><span>Count: </span>{activity.count}</p></fieldset>
+                                                <form id = {`editActivity${activity.id}`} className="editActivityForm" onSubmit={ async (event) => {
                                                         event.preventDefault();
                                                         const result = await editActivity(token, activity.routineActivityId, count, duration);
                                                         if(!result.error){
-                                                            getAllUserRoutinesAndActivites(username);
+                                                            getAllUserRoutinesAndActivites();
                                                         }else{
                                                             alert(result.error);
                                                         }
