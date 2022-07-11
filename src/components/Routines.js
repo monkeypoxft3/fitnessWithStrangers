@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchAllPublicRoutines, createRoutine, deleteRoutine, addActivityToRoutine, fetchAllActivities, editRoutine, editActivity } from "../api";
 
 export default function Routines({ token, loggedIn, userId, routines, setRoutines, activities, setActivities }) {
@@ -113,12 +113,12 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                     <input type="text" placeholder="goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
                                     <br></br>
                                     <center><label>Public Routine? </label>
-                                    <input type="checkbox" checked={isPublic} onChange={() => { setIsPublic(!isPublic); console.log(!isPublic) }}></input></center>
-                                    <center><button type="submit" className="editRoutine">Submit Changes</button></center>
+                                    <input type="checkbox" checked={isPublic} onChange={() => { setIsPublic(!isPublic) }}></input>
+                                    <button type="submit" className="editRoutine">Submit Changes</button></center>
                                 </form> : null
                             }
-                            <center>{ routine.creatorId === userId ? <button className="routineBtn" onClick={() => { routineToggle(routine.id) }} >Edit Routine</button> : null }
-                            { routine.creatorId === userId ? <button className="deleteRoutineBtn" onClick={() => { deleteRoutine(token, routine.id) }}>Delete</button> : null }</center>
+                            { routine.creatorId === userId ? <button className="routineBtn" onClick={() => { deleteRoutine(token, routine.id); }}>Delete Routine</button> : null }
+                            { routine.creatorId === userId ? <button className="routineBtn" onClick={() => { routineToggle(routine.id) }} >Edit Routine</button> : null }
                             {/* Add Activity To Routine */}
                             { routine.creatorId === userId ?
                                     <center><form id={`addActivity${routine.id}`} className="addActivityForm" onSubmit={async (event) => {
@@ -126,7 +126,6 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                         let result = addActivityToRoutine(token, routine.id, activityId, count, duration);
                                         if (!result.error) {
                                             getAllPublicRoutinesAndActivites();
-
                                         } else {
                                             alert(result.error);
                                         }
@@ -151,9 +150,9 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                 <div className="routineActivity" key={activity.id}>
                                     <fieldset className='routines'>
                                         <legend>{activity.name}</legend>
-                                        <p><span className='label'>Description: </span>{activity.description}</p>
-                                        <p><span className='label'>Count: </span>{activity.count}</p>
-                                        <p><span className='label'>Duration: </span>{activity.duration}</p>
+                                        <p><span>Description: </span>{activity.description}</p>
+                                        <p><span>Count: </span>{activity.count}</p>
+                                        <p><span>Duration: </span>{activity.duration}</p>
                                     </fieldset>
                                     {/* Edit Activity */}
                                     { routine.creatorId === userId ?
