@@ -1,4 +1,4 @@
-import React, {useState , useEffect} from "react";
+import {useState , useEffect} from "react";
 import { fetchUserRoutines, createRoutine, deleteRoutine, addActivityToRoutine, fetchAllActivities, editRoutine, editActivity }  from "../api";
 
 export default function MyRouintes({token, username, routines, setRoutines, activities, setActivities}){
@@ -27,7 +27,7 @@ export default function MyRouintes({token, username, routines, setRoutines, acti
     }
 
     useEffect(() => {
-        
+
         getAllUserRoutinesAndActivites()
 
     }, [token])    
@@ -71,9 +71,7 @@ export default function MyRouintes({token, username, routines, setRoutines, acti
                             event.preventDefault();
                             const result = await createRoutine(token, routineName, routineGoal, isPublic);
                             if(!result.error){
-                                getAllUserRoutinesAndActivites(username);
-
-
+                                getAllUserRoutinesAndActivites();
                             } else {
                                 alert(result.error);
                             }
@@ -106,7 +104,7 @@ export default function MyRouintes({token, username, routines, setRoutines, acti
                                             event.preventDefault();
                                             const result = await editRoutine(token, routine.id, routineName, routineGoal, isPublic);
                                             if(!result.error){
-                                                getAllUserRoutinesAndActivites(username);
+                                                getAllUserRoutinesAndActivites();
 
                                             }else{
                                                 alert(result.error);
@@ -125,8 +123,13 @@ export default function MyRouintes({token, username, routines, setRoutines, acti
                                         {/* Add Activity To Routine */}
                                         <form id={`addActivity${routine.id}`} className="addActivityForm" onSubmit={(event) => {
                                                 event.preventDefault();
-                                                addActivityToRoutine(token, routine.id, count, duration);
-                                            }}>
+                                                let result = addActivityToRoutine(token, routine.id, activityId, count, duration);
+                                                if (!result.error) {
+                                                    getAllUserRoutinesAndActivites();
+                                                } else {
+                                                    alert(result.error);
+                                                }
+                                        }}>
                                             <select 
                                                 className="addActivity"
                                                 value={activityId}
@@ -145,9 +148,9 @@ export default function MyRouintes({token, username, routines, setRoutines, acti
 
                                             <div className="routineActivity" key={activity.id}>
                                                 <h3>{activity.name}</h3>
-                                                <p><span className='label'>Description: </span>{activity.description}</p>
-                                                <p><span className='label'>Duration: </span>{activity.duration}</p>
-                                                <p><span className='label'>Count: </span>{activity.count}</p>
+                                                <p><span>Description: </span>{activity.description}</p>
+                                                <p><span>Duration: </span>{activity.duration}</p>
+                                                <p><span>Count: </span>{activity.count}</p>
                                                 <form id = {`editActivity${routine.id}`} className="editActivityForm" onSubmit={ async (event) => {
                                                         event.preventDefault();
                                                         const result = await editActivity(token, activity.routineActivityId, count, duration);
