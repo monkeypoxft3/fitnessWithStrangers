@@ -47,6 +47,7 @@ function App(){
         localStorage.removeItem("token");
         localStorage.removeItem("userId");
         localStorage.removeItem("user");
+        setLoggedIn(false);
         setToken("");
         setUserId(0);
         setUsername("");
