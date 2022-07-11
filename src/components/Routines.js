@@ -77,7 +77,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                 <br></br>
                                 <input type="text" placeholder="Routine Goal" onChange={(event) => { setRoutineGoal(event.target.value) }}></input>
                                 <br></br>
-                                <label>Public Routine? </label>
+                                <center><label>Public Routine? </label></center>
                                 <input type="checkbox" checked={isPublic} onChange={() => setIsPublic(!isPublic)}></input>
                                 <br></br>
                                 <button type="submit" className="btnAddRoutine">Add Routine</button>
@@ -97,8 +97,8 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                             <p><span className='label'>Goal: </span>{routine.goal}</p>
                             <p><span className='label'>Creator: </span>{routine.creatorName}</p>
                             {/* Edit Routine */}
-                            {routine.creatorId === userId ?
-                                <form id={`editRoutine${routine.id}`} className="editRoutineForm" onSubmit={async (event) => {
+                           {routine.creatorId === userId ?
+                                 <form id={`editRoutine${routine.id}`} className="editRoutineForm" onSubmit={async (event) => {
                                     event.preventDefault();
                                     const result = await editRoutine(token, routine.id, routineName, routineGoal, isPublic);
                                     if (!result.error) {
@@ -121,7 +121,7 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                             { routine.creatorId === userId ? <button className="routineBtn" onClick={() => { routineToggle(routine.id) }} >Edit Routine</button> : null }
                             {/* Add Activity To Routine */}
                             { routine.creatorId === userId ?
-                                    <form id={`addActivity${routine.id}`} className="addActivityForm" onSubmit={async (event) => {
+                                    <center><form id={`addActivity${routine.id}`} className="addActivityForm" onSubmit={async (event) => {
                                         event.preventDefault();
                                         let result = addActivityToRoutine(token, routine.id, activityId, count, duration);
                                         if (!result.error) {
@@ -130,19 +130,22 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                             alert(result.error);
                                         }
                                         }}>
-                                        <select
+                                        <br></br><select
                                             className="addActivity"
                                             value={activityId}
                                             onChange={(event) => setActivityId(event.target.value)}>
+                                                
                                             {activities.map(selectedOption => { return <option key={selectedOption.id} value={selectedOption.id}>{selectedOption.name}</option> })}
-                                        </select>
+                                        <br></br></select>
                                         <input type="text" placeholder="count" onChange={(event) => { setCount(event.target.value) }}></input>
                                         <br></br>
                                         <input type="text" placeholder="duration" onChange={(event) => { setDuration(event.target.value) }}></input>
-                                        <button type="submit" className="addActivityBtn">Submit Activity</button>
-                                    </form> : null
+                                        <br></br>
+                                        <center><button type="submit" className="addActivityBtn">Submit Activity</button></center>
+                                    </form></center> : null
                             }
-                            { routine.creatorId === userId ? <button className="addActivityBtn" onClick={() => { addActivityToggle(routine.id) }} >Add Activity</button> : null }
+                            { routine.creatorId === userId ? <center><button className="addActivityBtn" onClick={() => { addActivityToggle(routine.id) }} >Add Activity</button></center> : null }
+                            <br></br>
                             { routine.activities ? routine.activities.map(activity =>
                                 <div className="routineActivity" key={activity.id}>
                                     <fieldset className='routines'>
@@ -162,13 +165,14 @@ export default function Routines({ token, loggedIn, userId, routines, setRoutine
                                                 alert(result.error);
                                             }
                                             }}>
+                                            <br></br>
                                             <input type="text" placeholder="count" onChange={(event) => { setCount(event.target.value) }}></input>
                                             <br></br>
                                             <input type="text" placeholder="duration" onChange={(event) => { setDuration(event.target.value) }}></input>
-                                            <button type="submit" className="submitActivityBtn">Submit Edit</button>
-                                        </form> : null }
-                                        { routine.creatorId === userId ? <button className="editActivityBtn" onClick={() => { activityToggle(activity.id) }}>Edit Activity</button> : null }
-                                </div>
+                                            <center><button type="submit" className="submitActivityBtn">Submit Edit</button></center>
+                                        </form> : null }<br></br>
+                                        { routine.creatorId === userId ? <center><button className="editActivityBtn" onClick={() => { activityToggle(activity.id) }}>Edit Activity</button></center> : null }
+                                <br></br></div>
                             ) : null }
                             <br></br>
                         </div>
