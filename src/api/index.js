@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://fitnesstrac-kr.herokuapp.com/api/';
+export const BASE_URL = 'https://fitnesswithstrangers.herokuapp.com/';
 
 // Login/Register ----------------------------------------------------- (2)
 export async function loginUser(username, password) {
